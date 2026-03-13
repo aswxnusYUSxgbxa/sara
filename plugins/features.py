@@ -9,7 +9,7 @@ from plugins.autoDelete import convert_time
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from config import OWNER_ID, START_PIC
 from pyrogram import Client, filters
-from database.database import db 
+from database.database import db
 from plugins.query import *
 
 @Bot.on_message(filters.command('add_fsub') & filters.private & filters.user(OWNER_ID))
@@ -235,7 +235,7 @@ async def get_admins(client: Client, message: Message):
 
 #Commands for banned user function............
 @Bot.on_message(filters.command('add_banuser') & filters.private & is_admin)
-async def add_banuser(client:Client, message:Message):        
+async def add_banuser(client:Client, message:Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     check, autho_users = 0, []
     banuser_ids = await db.get_ban_users()
@@ -263,13 +263,13 @@ async def add_banuser(client:Client, message:Message):
             banuser_list += f"<blockquote><b>ɪᴅ: <code>{id}</code>, ᴀʟʀᴇᴀᴅʏ ᴇxɪsᴛ..</b></blockquote>\n"
             continue
 
-        id = str(id)  
+        id = str(id)
         if id.isdigit() and len(id) == 10:
             banuser_list += f"<b><blockquote>(ID: <code>{id}</code>)</blockquote></b>\n"
             check += 1
         else:
             banuser_list += f"<blockquote><b>ɪɴᴠᴀʟɪᴅ ɪᴅ: <code>{id}</code></b></blockquote>\n"
-            continue            
+            continue
 
     if check == len(banusers):
         for id in banusers:
@@ -282,7 +282,7 @@ async def add_banuser(client:Client, message:Message):
 
 
 @Bot.on_message(filters.command('del_banuser') & filters.private & is_admin)
-async def delete_banuser(client:Client, message:Message):        
+async def delete_banuser(client:Client, message:Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     banuser_ids = await db.get_ban_users()
     banusers = message.text.split()[1:]
@@ -323,7 +323,7 @@ async def delete_banuser(client:Client, message:Message):
 
 
 @Bot.on_message(filters.command('banuser_list') & filters.private & is_admin)
-async def get_banuser_list(client:Client, message: Message):        
+async def get_banuser_list(client:Client, message: Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
 
     banuser_ids = await db.get_ban_users()
@@ -397,11 +397,11 @@ async def files_commands(client: Client, message: Message):
         if await db.get_channel_button():
             channel_button = on_txt
             cbd = '✅'
-        name, link, name2, link2 = await db.get_channel_button_links()
-        if not name2:
-            name2 = "Not Set"
-        if not link2:
-            link2 = "Not Set"
+        buttons_data = await db.get_channel_button_links()
+        name = buttons_data[0]['name'] if len(buttons_data) > 0 else "Not Set"
+        link = buttons_data[0]['link'] if len(buttons_data) > 0 else "Not Set"
+        name2 = buttons_data[1]['name'] if len(buttons_data) > 1 else "Not Set"
+        link2 = buttons_data[1]['link'] if len(buttons_data) > 1 else "Not Set"
 
         await message.reply_photo(
             photo = files_cmd_pic,
