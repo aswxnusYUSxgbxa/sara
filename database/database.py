@@ -610,10 +610,10 @@ class Rohit:
             settings = await self.free_data.find_one({"_id": "free_usage"})  # Ensure correct _id
             if settings:
                 return int(settings.get("limit", 5))  # Default to 5 if missing
-            return None
+            return 5 # Return a default of 5 instead of None if not found
         except Exception as e:
             logging.error(f"Error fetching limit: {e}")
-            return None
+            return 5
 
     # **Update Free Usage Count**
     async def update_free_usage(self, user_id):
