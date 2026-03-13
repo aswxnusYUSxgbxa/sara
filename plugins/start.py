@@ -981,6 +981,19 @@ async def get_batch(client: Client, message: Message):
                 from config import CUSTOM_CAPTION
                 custom_caption = CUSTOM_CAPTION
 
+            # Prepare reply markup
+            reply_markup = None
+            if CHNL_BTN:
+                try:
+                    buttons_data = await db.get_channel_button_links()
+                    buttons = []
+                    for btn in buttons_data:
+                        buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+                    if buttons:
+                        reply_markup = InlineKeyboardMarkup(buttons)
+                except Exception as e:
+                    logging.error(f"Error building buttons: {e}")
+
             try:
                 sent_msgs = await send_batch_media(
                     client, 
@@ -989,10 +1002,24 @@ async def get_batch(client: Client, message: Message):
                     caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
                     hide_caption=HIDE_CAPTION
                 )
+
+                if sent_msgs and reply_markup:
+                    last_msg = sent_msgs[-1] if isinstance(sent_msgs, list) and len(sent_msgs) > 0 else sent_msgs
+                    button_msg = await client.send_message(
+                        chat_id=message.chat.id,
+                        text="🔗 <b>Bᴜᴛᴛᴏɴs:</b>",
+                        reply_markup=reply_markup,
+                        reply_to_message_id=last_msg.id if hasattr(last_msg, "id") else None
+                    )
+                    if isinstance(sent_msgs, list):
+                        sent_msgs.append(button_msg)
+                    else:
+                        sent_msgs = [sent_msgs, button_msg]
+
                 if AUTO_DEL and sent_msgs:
                     # For media groups, delete all messages
                     if isinstance(sent_msgs, list) and len(sent_msgs) > 0:
-                        last_msg = sent_msgs[-1]
+                        last_msg = sent_msgs[-1] if not reply_markup else sent_msgs[-2]
                         asyncio.create_task(auto_del_notification(client.username, last_msg, DEL_TIMER, f"get_batch_{user_id}", is_batch=True, all_messages=sent_msgs))
                     elif sent_msgs:
                         asyncio.create_task(auto_del_notification(client.username, sent_msgs, DEL_TIMER, f"get_batch_{user_id}"))
@@ -1006,10 +1033,24 @@ async def get_batch(client: Client, message: Message):
                     caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
                     hide_caption=HIDE_CAPTION
                 )
+
+                if sent_msgs and reply_markup:
+                    last_msg = sent_msgs[-1] if isinstance(sent_msgs, list) and len(sent_msgs) > 0 else sent_msgs
+                    button_msg = await client.send_message(
+                        chat_id=message.chat.id,
+                        text="🔗 <b>Bᴜᴛᴛᴏɴs:</b>",
+                        reply_markup=reply_markup,
+                        reply_to_message_id=last_msg.id if hasattr(last_msg, "id") else None
+                    )
+                    if isinstance(sent_msgs, list):
+                        sent_msgs.append(button_msg)
+                    else:
+                        sent_msgs = [sent_msgs, button_msg]
+
                 if AUTO_DEL and sent_msgs:
                     # For media groups, delete all messages
                     if isinstance(sent_msgs, list) and len(sent_msgs) > 0:
-                        last_msg = sent_msgs[-1]
+                        last_msg = sent_msgs[-1] if not reply_markup else sent_msgs[-2]
                         asyncio.create_task(auto_del_notification(client.username, last_msg, DEL_TIMER, f"get_batch_{user_id}", is_batch=True, all_messages=sent_msgs))
                     elif sent_msgs:
                         asyncio.create_task(auto_del_notification(client.username, sent_msgs, DEL_TIMER, f"get_batch_{user_id}"))
@@ -1137,6 +1178,19 @@ async def get_batch(client: Client, message: Message):
         from config import CUSTOM_CAPTION
         custom_caption = CUSTOM_CAPTION
 
+    # Prepare reply markup for free users batch
+    reply_markup = None
+    if CHNL_BTN:
+        try:
+            buttons_data = await db.get_channel_button_links()
+            buttons = []
+            for btn in buttons_data:
+                buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+            if buttons:
+                reply_markup = InlineKeyboardMarkup(buttons)
+        except Exception as e:
+            logging.error(f"Error building buttons: {e}")
+
     # Deduct usage and send batch
     await db.update_free_usage(user_id)
     try:
@@ -1147,10 +1201,26 @@ async def get_batch(client: Client, message: Message):
             caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
             hide_caption=HIDE_CAPTION
         )
-        if AUTO_DEL and sent_msgs:
+        if sent_msgs and reply_markup:
             last_msg = sent_msgs[-1] if isinstance(sent_msgs, list) and len(sent_msgs) > 0 else sent_msgs
-            if last_msg:
-                asyncio.create_task(auto_del_notification(client.username, last_msg, DEL_TIMER, f"get_batch_{user_id}"))
+            button_msg = await client.send_message(
+                chat_id=message.chat.id,
+                text="🔗 <b>Bᴜᴛᴛᴏɴs:</b>",
+                reply_markup=reply_markup,
+                reply_to_message_id=last_msg.id if hasattr(last_msg, "id") else None
+            )
+            if isinstance(sent_msgs, list):
+                sent_msgs.append(button_msg)
+            else:
+                sent_msgs = [sent_msgs, button_msg]
+
+        if AUTO_DEL and sent_msgs:
+            # For media groups, delete all messages
+            if isinstance(sent_msgs, list) and len(sent_msgs) > 0:
+                last_msg = sent_msgs[-1] if not reply_markup else sent_msgs[-2]
+                asyncio.create_task(auto_del_notification(client.username, last_msg, DEL_TIMER, f"get_batch_{user_id}", is_batch=True, all_messages=sent_msgs))
+            elif sent_msgs:
+                asyncio.create_task(auto_del_notification(client.username, sent_msgs, DEL_TIMER, f"get_batch_{user_id}"))
     except FloodWait as e:
         await asyncio.sleep(e.x)
         sent_msgs = await send_batch_media(
