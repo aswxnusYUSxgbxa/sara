@@ -839,6 +839,166 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
         except Exception as e:
             print(f"! Error Occurred on callback data = 'chng_req' : {e}")
+    elif data == "fsub_main":
+        if await authoUser(query, query.from_user.id):
+            button = [
+                [InlineKeyboardButton("➕ Add Channel", callback_data="fsub_add"), InlineKeyboardButton("➖ Remove Channel", callback_data="fsub_remove")],
+                [InlineKeyboardButton("📋 List Channels", callback_data="fsub_list")],
+                [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
+            ]
+            await query.message.edit_text(text="<b>🤖 Force Subscription Settings:</b>\n\nManage your force sub channels below. You can add up to 5 channels.", reply_markup=InlineKeyboardMarkup(button))
+
+    elif data == "fsub_add":
+        if await authoUser(query, query.from_user.id):
+            channels = await db.get_all_channels()
+            if len(channels) >= 5:
+                await query.answer("❌ You can only add up to 5 force sub channels.", show_alert=True)
+                return
+
+            try:
+                user_id = query.from_user.id
+                prompt_msg = await client.ask(
+                    chat_id=user_id,
+                    text="<b>Please send the Channel ID you want to add for force sub:</b>\n\n<i>Make sure the bot is an admin in that channel before sending the ID.</i>",
+                    timeout=60
+                )
+
+                channel_id_str = prompt_msg.text.strip()
+                try:
+                    channel_id = int(channel_id_str)
+                except ValueError:
+                    await prompt_msg.reply("❌ Invalid Channel ID format. Please try again.")
+                    return
+
+                if channel_id in channels:
+                    await prompt_msg.reply("❌ This channel is already added.")
+                    return
+
+                try:
+                    from pyrogram.enums import ChatMemberStatus
+                    chat = await client.get_chat(channel_id)
+                    member = await client.get_chat_member(channel_id, client.me.id)
+
+                    if member.status not in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
+                         await prompt_msg.reply("❌ The bot is not an admin in the specified channel. Please promote the bot to admin and try again.")
+                         return
+
+                except Exception as e:
+                    await prompt_msg.reply(f"❌ Error verifying channel: {e}\n\nPlease ensure the ID is correct and the bot is an admin in the channel.")
+                    return
+
+                button = [
+                    [InlineKeyboardButton("Direct Force Sub", callback_data=f"fsub_set_{channel_id}_direct")],
+                    [InlineKeyboardButton("Request Force Sub", callback_data=f"fsub_set_{channel_id}_request")],
+                    [InlineKeyboardButton("Cancel", callback_data="fsub_main")]
+                ]
+                await prompt_msg.reply(
+                    f"<b>Channel Verified: {chat.title}</b>\n\nChoose the type of force sub you want to set up:",
+                    reply_markup=InlineKeyboardMarkup(button)
+                )
+
+            except asyncio.TimeoutError:
+                await client.send_message(user_id, "⏳ Request timed out.")
+            except Exception as e:
+                logging.error(f"Error in fsub_add: {e}")
+                await client.send_message(user_id, "❌ An error occurred.")
+
+    elif data.startswith("fsub_set_"):
+        if await authoUser(query, query.from_user.id):
+            parts = data.split("_")
+            channel_id = int(parts[2])
+            mode = parts[3]
+
+            await db.add_channel(channel_id)
+
+            if mode == "request":
+                await db.set_request_forcesub_channel(channel_id, True)
+                await db.add_reqChannel(channel_id)
+                try:
+                    link = (await client.create_chat_invite_link(chat_id=channel_id, creates_join_request=True)).invite_link
+                    await db.store_reqLink(channel_id, link)
+                except Exception as e:
+                    logging.error(f"Failed to create join request link for {channel_id}: {e}")
+                    await query.answer("⚠️ Channel added, but failed to create join request link. Ensure the bot has correct permissions.", show_alert=True)
+            else:
+                await db.set_request_forcesub_channel(channel_id, False)
+
+            mode_text = 'Request' if mode == 'request' else 'Direct'
+            await query.message.edit_text(
+                f"✅ <b>Channel {channel_id} successfully added as {mode_text} Force Sub!</b>",
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")]])
+            )
+
+    elif data == "fsub_remove":
+        if await authoUser(query, query.from_user.id):
+            channels = await db.get_all_channels()
+            if not channels:
+                await query.answer("❌ No force sub channels found.", show_alert=True)
+                return
+
+            buttons = []
+            for channel_id in channels:
+                try:
+                    chat = await client.get_chat(channel_id)
+                    title = chat.title
+                except:
+                    title = str(channel_id)
+                buttons.append([InlineKeyboardButton(f"❌ Remove {title}", callback_data=f"fsub_del_{channel_id}")])
+
+            buttons.append([InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")])
+
+            await query.message.edit_text(
+                "<b>Select a channel to remove:</b>",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
+
+    elif data.startswith("fsub_del_"):
+        if await authoUser(query, query.from_user.id):
+            channel_id = int(data.split("_")[2])
+
+            try:
+                stored_link = await db.get_stored_reqLink(channel_id)
+                if stored_link:
+                    await client.revoke_chat_invite_link(channel_id, stored_link)
+            except Exception:
+                pass
+
+            await db.del_channel(channel_id)
+            await db.del_reqChannel(channel_id)
+            await db.del_stored_reqLink(channel_id)
+
+            await query.answer("✅ Channel removed successfully.", show_alert=True)
+
+            query.data = "fsub_remove"
+            await cb_handler(client, query)
+
+    elif data == "fsub_list":
+        if await authoUser(query, query.from_user.id):
+            channels = await db.get_all_channels()
+            if not channels:
+                await query.message.edit_text(
+                    "<b>📋 Force Sub Channels:</b>\n\nNo channels configured.",
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")]])
+                )
+                return
+
+            text = "<b>📋 Force Sub Channels:</b>\n\n"
+            for channel_id in channels:
+                try:
+                    chat = await client.get_chat(channel_id)
+                    title = chat.title
+                except:
+                    title = "Unknown Channel"
+
+                is_req = await db.get_request_forcesub_channel(channel_id)
+                mode_str = "Request" if is_req else "Direct"
+                text += f"◈ <b>{title}</b> (<code>{channel_id}</code>) - Mode: <i>{mode_str}</i>\n"
+
+            await query.message.edit_text(
+                text,
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")]])
+            )
+
     
 
     # Handle shortener settings

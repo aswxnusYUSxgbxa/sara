@@ -1,0 +1,5 @@
+Bot.session
+__pycache__/
+*.pyc
+bot_output.log
+testingbot.txt
