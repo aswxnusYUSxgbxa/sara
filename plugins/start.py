@@ -1563,7 +1563,7 @@ async def not_joined(client: Client, message: Message):
 
     user_id = message.from_user.id
 
-    REQFSUB = await db.get_request_forcesub()
+    
     buttons = []
     count = 0
 
@@ -1584,7 +1584,8 @@ async def not_joined(client: Client, message: Message):
                     cname = data.title
 
                     # Handle private channels and links
-                    if REQFSUB and not data.username: 
+                    is_req_fsub = await db.get_request_forcesub_channel(chat_id)
+                    if is_req_fsub and not data.username: 
                         link = await db.get_stored_reqLink(chat_id)
                         await db.add_reqChannel(chat_id)
 
@@ -1600,8 +1601,14 @@ async def not_joined(client: Client, message: Message):
                     await temp.edit(f"<b>{'! ' * count}</b>")
 
                 except Exception as e:
-                    print(f"Can't Export Channel Name and Link..., Please Check If the Bot is admin in the FORCE SUB CHANNELS:\nProvided Force sub Channel:- {chat_id}")
-                    return await temp.edit(f"<b><i>! Eʀʀᴏʀ, Cᴏɴᴛᴀᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ ᴛᴏ sᴏʟᴠᴇ ᴛʜᴇ ɪssᴜᴇs @rohit_1888</i></b>\n<blockquote expandable><b>Rᴇᴀsᴏɴ:</b> {e}</blockquote>")
+                    print(f"Can't Export Channel Name and Link..., Please Check If the Bot is admin in the FORCE SUB CHANNELS:\nProvided Force sub Channel:- {chat_id}. Exception: {e}")
+                    try:
+                        await db.del_channel(chat_id)
+                        await db.del_reqChannel(chat_id)
+                        await db.del_stored_reqLink(chat_id)
+                    except Exception as del_e:
+                        print(f"Failed to auto-remove invalid channel {chat_id}: {del_e}")
+                    continue
 
         # Add a 'Get Batch' button so users can fetch a batch even if not yet joined
         try:
@@ -1966,10 +1973,14 @@ async def check_plan(client: Client, message: Message):
     # Send the response message to the user
     await message.reply(status_message)
 
-@Bot.on_message(filters.command('forcesub') & filters.private & ~banUser)
+@Bot.on_message(filters.command(['forcesub', 'fsub', 'config', 'settings']) & filters.private & is_admin)
 async def fsub_commands(client: Client, message: Message):
-    button = [[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]]
-    await message.reply(text=FSUB_CMD_TXT, reply_markup=InlineKeyboardMarkup(button), quote=True)
+    button = [
+        [InlineKeyboardButton("➕ Add Channel", callback_data="fsub_add"), InlineKeyboardButton("➖ Remove Channel", callback_data="fsub_remove")],
+        [InlineKeyboardButton("📋 List Channels", callback_data="fsub_list")],
+        [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
+    ]
+    await message.reply(text="<b>🤖 Force Subscription Settings:</b>\n\nManage your force sub channels below. You can add up to 5 channels.", reply_markup=InlineKeyboardMarkup(button), quote=True)
 
 
 @Bot.on_message(filters.command('help') & filters.private & ~banUser)

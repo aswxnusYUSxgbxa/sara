@@ -2,3 +2,86 @@ by
 @rohit_1888
 
 on Telegram 
+[13-Mar-26 08:52:47 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 08:52:47 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 08:52:47 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 08:53:39 - INFO] - root - Received /start command from user ID: 1137799257
+[13-Mar-26 08:53:43 - ERROR] - pyrogram.dispatcher - unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/message_handler.py", line 154, in resolve_future_or_callback
+    await self.original_callback(client, message, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyromod/listen/listen.py", line 93, in resolve_listener
+    await self.user_callback(client, message, *args)
+  File "/home/aswin/repo/sara/plugins/start.py", line 475, in on_get_photo
+    await get_photo(client, message)
+  File "/home/aswin/repo/sara/plugins/start.py", line 779, in get_photo
+    remaining_attempts = free_limit - free_count
+                         ~~~~~~~~~~~^~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+[13-Mar-26 08:54:58 - INFO] - root - Received /start command from user ID: 1137799257
+[13-Mar-26 08:55:03 - ERROR] - pyrogram.dispatcher - unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/message_handler.py", line 154, in resolve_future_or_callback
+    await self.original_callback(client, message, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyromod/listen/listen.py", line 93, in resolve_listener
+    await self.user_callback(client, message, *args)
+  File "/home/aswin/repo/sara/plugins/start.py", line 475, in on_get_photo
+    await get_photo(client, message)
+  File "/home/aswin/repo/sara/plugins/start.py", line 779, in get_photo
+    remaining_attempts = free_limit - free_count
+                         ~~~~~~~~~~~^~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+[13-Mar-26 08:55:05 - ERROR] - pyrogram.dispatcher - unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/message_handler.py", line 154, in resolve_future_or_callback
+    await self.original_callback(client, message, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyromod/listen/listen.py", line 93, in resolve_listener
+    await self.user_callback(client, message, *args)
+  File "/home/aswin/repo/sara/plugins/start.py", line 460, in on_get_video
+    await get_video(client, message)
+  File "/home/aswin/repo/sara/plugins/start.py", line 1374, in get_video
+    remaining_attempts = free_limit - free_count
+                         ~~~~~~~~~~~^~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+[13-Mar-26 08:55:08 - ERROR] - pyrogram.dispatcher - unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/message_handler.py", line 154, in resolve_future_or_callback
+    await self.original_callback(client, message, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyromod/listen/listen.py", line 93, in resolve_listener
+    await self.user_callback(client, message, *args)
+  File "/home/aswin/repo/sara/plugins/start.py", line 489, in on_get_batch
+    await get_batch(client, message)
+  File "/home/aswin/repo/sara/plugins/start.py", line 1036, in get_batch
+    remaining_attempts = free_limit - free_count
+                         ~~~~~~~~~~~^~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+[13-Mar-26 08:55:11 - ERROR] - pyrogram.dispatcher - unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/message_handler.py", line 154, in resolve_future_or_callback
+    await self.original_callback(client, message, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyromod/listen/listen.py", line 93, in resolve_listener
+    await self.user_callback(client, message, *args)
+  File "/home/aswin/repo/sara/plugins/start.py", line 416, in on_plan_status
+    remaining_attempts = free_limit - free_count
+                         ~~~~~~~~~~~^~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+[13-Mar-26 09:26:35 - INFO] - __main__ - Shutting down...
+[13-Mar-26 09:26:43 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 09:26:43 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 09:26:43 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 09:38:21 - INFO] - root - Stored 2 new photos
+[13-Mar-26 17:44:11 - INFO] - __main__ - Shutting down...
+[13-Mar-26 17:44:24 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 17:44:24 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 17:44:25 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 18:05:46 - INFO] - root - Received /start command from user ID: 1137799257
