@@ -1981,9 +1981,7 @@ async def fsub_commands(client: Client, message: Message):
         [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
     ]
     await message.reply(
-        text="<b>⚙️ Main Settings Panel:</b>
-
-Manage your bot's configuration from here.",
+        text="<b>⚙️ Main Settings Panel:</b>\n\nManage your bot's configuration from here.",
         reply_markup=InlineKeyboardMarkup(button),
         quote=True
     )
