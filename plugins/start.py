@@ -49,12 +49,12 @@ async def start_command(client: Client, message: Message):
             # Check if user is banned
     if await db.ban_user_exist(user_id):
         return await message.reply_text(BAN_TXT, quote=True)
-        
-    
+
+
     # Check if user is subscribed (check for all users including admins)
     if not await is_subscribed(client, message):
         return await not_joined(client, message)
-        
+
     # Fetch verify status + expiry duration
     try:
         verify_status = await db.get_verify_status(id) or {}
@@ -263,18 +263,18 @@ async def start_command(client: Client, message: Message):
             ),
             reply_markup=reply_kb
         )
-                    
-                
+
+
 
 #=====================================================================================##
 
 @Bot.on_message(filters.command('check') & filters.private)
 async def check_command(client: Client, message: Message):
     user_id = message.from_user.id
-    
+
     # Check if user is premium
     is_premium = await is_premium_user(user_id)
-    
+
     if is_premium:
         # Premium user - no verification needed
         return await message.reply_text(
@@ -282,7 +282,7 @@ async def check_command(client: Client, message: Message):
             protect_content=False,
             quote=True
         )
-    
+
     # Not premium - check verification status
     try:
         verify_status = await db.get_verify_status(user_id) or {}
@@ -291,7 +291,7 @@ async def check_command(client: Client, message: Message):
         logging.error(f"Error fetching verify status: {e}")
         verify_status = {"is_verified": False}
         VERIFY_EXPIRE = None
-    
+
     if verify_status.get("is_verified", False):
         expiry_text = get_exp_time(VERIFY_EXPIRE) if VERIFY_EXPIRE else "the configured duration"
         return await message.reply_text(
@@ -299,7 +299,7 @@ async def check_command(client: Client, message: Message):
             protect_content=False,
             quote=True
         )
-    
+
     # Not verified - check if shortener is available
     try:
         shortener_url = await db.get_shortener_url()
@@ -308,24 +308,24 @@ async def check_command(client: Client, message: Message):
         logging.error(f"Error fetching shortener settings: {e}")
         shortener_url = None
         shortener_api = None
-    
+
     if shortener_url and shortener_api:
         # Show verification prompt with shortlink
         try:
             token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
             await db.update_verify_status(user_id, verify_token=token, link="")
-            
+
             long_url = f"https://telegram.dog/{client.username}?start=verify_{token}"
             short_link = await get_shortlink(long_url)
-            
+
             tut_vid_url = await db.get_tut_video() or TUT_VID
-            
+
             btn = [
                 [InlineKeyboardButton("Click here", url=short_link),
                  InlineKeyboardButton('How to use the bot', url=tut_vid_url)],
                 [InlineKeyboardButton('BUY PREMIUM', callback_data='buy_prem')]
             ]
-            
+
             expiry_text = get_exp_time(VERIFY_EXPIRE) if VERIFY_EXPIRE else "the configured duration"
             return await message.reply(
                 f"Your ads token is expired or invalid. Please verify to access the files.\n\n"
@@ -361,8 +361,8 @@ async def on_plan_status(client: Client, message: Message):
         # Check if user is banned
     if await db.ban_user_exist(user_id):
         return await message.reply_text(BAN_TXT, quote=True)
-        
-    
+
+
     # Check if user is subscribed (check for all users including admins)
     if not await is_subscribed(client, message):
         return await not_joined(client, message)
@@ -451,12 +451,12 @@ async def on_get_video(client: Client, message: Message):
         # Check if user is banned
     if await db.ban_user_exist(user_id):
         return await message.reply_text(BAN_TXT, quote=True)
-        
-    
+
+
     # Check if user is subscribed (check for all users including admins)
     if not await is_subscribed(client, message):
         return await not_joined(client, message)
-        
+
     await get_video(client, message)
 
 
@@ -466,12 +466,12 @@ async def on_get_photo(client: Client, message: Message):
             # Check if user is banned
     if await db.ban_user_exist(user_id):
         return await message.reply_text(BAN_TXT, quote=True)
-        
-    
+
+
     # Check if user is subscribed (check for all users including admins)
     if not await is_subscribed(client, message):
         return await not_joined(client, message)
-        
+
     await get_photo(client, message)
 
 
@@ -481,8 +481,8 @@ async def on_get_batch(client: Client, message: Message):
             # Check if user is banned
     if await db.ban_user_exist(user_id):
         return await message.reply_text(BAN_TXT, quote=True)
-        
-    
+
+
     # Check if user is subscribed (check for all users including admins)
     if not await is_subscribed(client, message):
         return await not_joined(client, message)
@@ -532,8 +532,8 @@ async def send_random_video(client: Client, chat_id, protect=True, caption="", r
         final_caption = "" if hide_caption else (caption if caption else None)
         try:
             sent_msg = await client.send_video(
-                chat_id, 
-                random_video["file_id"], 
+                chat_id,
+                random_video["file_id"],
                 caption=final_caption,
                 parse_mode=ParseMode.HTML if final_caption else None,
                 reply_markup=reply_markup,
@@ -543,8 +543,8 @@ async def send_random_video(client: Client, chat_id, protect=True, caption="", r
         except FloodWait as e:
             await asyncio.sleep(e.x)
             sent_msg = await client.send_video(
-                chat_id, 
-                random_video["file_id"], 
+                chat_id,
+                random_video["file_id"],
                 caption=final_caption,
                 parse_mode=ParseMode.HTML if final_caption else None,
                 reply_markup=reply_markup,
@@ -576,7 +576,7 @@ async def store_photos(app: Client):
                     exists = await db.photo_exists(file_id)
                     if not exists:
                         all_photos.append({"file_id": file_id})
-            
+
             # Add delay between batches to avoid rate limits
             if i < full - 1:  # Don't delay after last batch
                 await asyncio.sleep(1)  # 1 second delay between batches
@@ -626,8 +626,8 @@ async def send_random_photo(client: Client, chat_id, protect=True, caption="", r
         random_photo = random.choice(photos)
         try:
             sent_msg = await client.send_photo(
-                chat_id, 
-                random_photo["file_id"], 
+                chat_id,
+                random_photo["file_id"],
                 caption=final_caption,
                 parse_mode=ParseMode.HTML if final_caption else None,
                 reply_markup=reply_markup,
@@ -637,8 +637,8 @@ async def send_random_photo(client: Client, chat_id, protect=True, caption="", r
         except FloodWait as e:
             await asyncio.sleep(e.x)
             sent_msg = await client.send_photo(
-                chat_id, 
-                random_photo["file_id"], 
+                chat_id,
+                random_photo["file_id"],
                 caption=final_caption,
                 parse_mode=ParseMode.HTML if final_caption else None,
                 reply_markup=reply_markup,
@@ -735,8 +735,8 @@ async def get_photo(client: Client, message: Message):
 
             try:
                 sent_msg = await send_random_photo(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=caption,
                     reply_markup=reply_markup,
@@ -749,8 +749,8 @@ async def get_photo(client: Client, message: Message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 sent_msg = await send_random_photo(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=caption,
                     reply_markup=reply_markup,
@@ -809,22 +809,22 @@ async def get_photo(client: Client, message: Message):
                 try:
                     shortener_url = await db.get_shortener_url()
                     shortener_api = await db.get_shortener_api()
-                    
+
                     if shortener_url and shortener_api:
                         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
                         await db.update_verify_status(user_id, verify_token=token, link="")
-                        
+
                         long_url = f"https://telegram.dog/{client.username}?start=verify_{token}"
                         short_link = await get_shortlink(long_url)
-                        
+
                         tut_vid_url = await db.get_tut_video() or TUT_VID
-                        
+
                         btn = [
                             [InlineKeyboardButton("Click here", url=short_link),
                              InlineKeyboardButton('How to use the bot', url=tut_vid_url)],
                             [InlineKeyboardButton('BUY PREMIUM', callback_data='buy_prem')]
                         ]
-                        
+
                         return await message.reply(
                             f"Your ads token is expired or invalid. Please verify to access the files.\n\n"
                             f"Token Timeout: {get_exp_time(VERIFY_EXPIRE)}\n\n"
@@ -842,7 +842,7 @@ async def get_photo(client: Client, message: Message):
                         protect_content=False,
                         quote=True
                     )
-        
+
         # No points left and no verification
         buttons = [[InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="buy_prem")]]
         return await message.reply_text(
@@ -899,8 +899,8 @@ async def get_photo(client: Client, message: Message):
     await db.update_free_usage(user_id)
     try:
         sent_msg = await send_random_photo(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=caption,
             reply_markup=reply_markup,
@@ -911,8 +911,8 @@ async def get_photo(client: Client, message: Message):
     except FloodWait as e:
         await asyncio.sleep(e.x)
         sent_msg = await send_random_photo(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=caption,
             reply_markup=reply_markup,
@@ -985,8 +985,8 @@ async def get_batch(client: Client, message: Message):
 
             try:
                 sent_msgs = await send_batch_media(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
                     hide_caption=HIDE_CAPTION
@@ -1002,8 +1002,8 @@ async def get_batch(client: Client, message: Message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 sent_msgs = await send_batch_media(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
                     hide_caption=HIDE_CAPTION
@@ -1066,22 +1066,22 @@ async def get_batch(client: Client, message: Message):
                 try:
                     shortener_url = await db.get_shortener_url()
                     shortener_api = await db.get_shortener_api()
-                    
+
                     if shortener_url and shortener_api:
                         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
                         await db.update_verify_status(user_id, verify_token=token, link="")
-                        
+
                         long_url = f"https://telegram.dog/{client.username}?start=verify_{token}"
                         short_link = await get_shortlink(long_url)
-                        
+
                         tut_vid_url = await db.get_tut_video() or TUT_VID
-                        
+
                         btn = [
                             [InlineKeyboardButton("Click here", url=short_link),
                              InlineKeyboardButton('How to use the bot', url=tut_vid_url)],
                             [InlineKeyboardButton('BUY PREMIUM', callback_data='buy_prem')]
                         ]
-                        
+
                         return await message.reply(
                             f"Your ads token is expired or invalid. Please verify to access the files.\n\n"
                             f"Token Timeout: {get_exp_time(VERIFY_EXPIRE)}\n\n"
@@ -1099,7 +1099,7 @@ async def get_batch(client: Client, message: Message):
                         protect_content=False,
                         quote=True
                     )
-        
+
         # No points left and no verification
         buttons = [[InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="buy_prem")]]
         return await message.reply_text(
@@ -1143,8 +1143,8 @@ async def get_batch(client: Client, message: Message):
     await db.update_free_usage(user_id)
     try:
         sent_msgs = await send_batch_media(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
             hide_caption=HIDE_CAPTION
@@ -1156,8 +1156,8 @@ async def get_batch(client: Client, message: Message):
     except FloodWait as e:
         await asyncio.sleep(e.x)
         sent_msgs = await send_batch_media(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=custom_caption if custom_caption and not HIDE_CAPTION else None,
             hide_caption=HIDE_CAPTION
@@ -1173,13 +1173,13 @@ async def send_batch_media(client: Client, chat_id, protect=True, caption=None, 
     # Get both photos and videos
     photos = await db.get_photos()
     videos = await db.get_videos()
-    
+
     # Only store if database is empty (run in background to avoid blocking)
     if not photos:
         asyncio.create_task(store_photos(client))
         await asyncio.sleep(1)  # Brief wait
         photos = await db.get_photos()
-    
+
     if not videos:
         asyncio.create_task(store_videos(client))
         await asyncio.sleep(1)  # Brief wait
@@ -1192,7 +1192,7 @@ async def send_batch_media(client: Client, chat_id, protect=True, caption=None, 
     # Create media group with up to 10 items (mix of photos and videos)
     media_group = []
     total_needed = 10
-    
+
     # Collect all available media
     all_media = []
     if photos:
@@ -1201,15 +1201,15 @@ async def send_batch_media(client: Client, chat_id, protect=True, caption=None, 
     if videos:
         for video in videos:
             all_media.append(("video", video["file_id"]))
-    
+
     if not all_media:
         await client.send_message(chat_id, "No media available right now.")
         return None
-    
+
     # Randomly shuffle and take up to 10 items
     random.shuffle(all_media)
     selected = all_media[:min(total_needed, len(all_media))]
-    
+
     # Add caption only to the first media item (if not hiding caption)
     for idx, (media_type, file_id) in enumerate(selected):
         if media_type == "photo":
@@ -1222,7 +1222,7 @@ async def send_batch_media(client: Client, chat_id, protect=True, caption=None, 
                 media_group.append(InputMediaVideo(file_id, caption=caption, parse_mode=ParseMode.HTML))
             else:
                 media_group.append(InputMediaVideo(file_id))
-    
+
     if media_group:
         try:
             sent_msgs = await client.send_media_group(chat_id, media_group, protect_content=protect)
@@ -1331,8 +1331,8 @@ async def get_video(client: Client, message: Message):
 
             try:
                 sent_msg = await send_random_video(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=caption,
                     reply_markup=reply_markup,
@@ -1344,8 +1344,8 @@ async def get_video(client: Client, message: Message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 sent_msg = await send_random_video(
-                    client, 
-                    message.chat.id, 
+                    client,
+                    message.chat.id,
                     protect=PROTECT_MODE,
                     caption=caption,
                     reply_markup=reply_markup,
@@ -1404,22 +1404,22 @@ async def get_video(client: Client, message: Message):
                 try:
                     shortener_url = await db.get_shortener_url()
                     shortener_api = await db.get_shortener_api()
-                    
+
                     if shortener_url and shortener_api:
                         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
                         await db.update_verify_status(user_id, verify_token=token, link="")
-                        
+
                         long_url = f"https://telegram.dog/{client.username}?start=verify_{token}"
                         short_link = await get_shortlink(long_url)
-                        
+
                         tut_vid_url = await db.get_tut_video() or TUT_VID
-                        
+
                         btn = [
                             [InlineKeyboardButton("Click here", url=short_link),
                              InlineKeyboardButton('How to use the bot', url=tut_vid_url)],
                             [InlineKeyboardButton('BUY PREMIUM', callback_data='buy_prem')]
                         ]
-                        
+
                         return await message.reply(
                             f"Your ads token is expired or invalid. Please verify to access the files.\n\n"
                             f"Token Timeout: {get_exp_time(VERIFY_EXPIRE)}\n\n"
@@ -1437,7 +1437,7 @@ async def get_video(client: Client, message: Message):
                         protect_content=False,
                         quote=True
                     )
-        
+
         # No points left and no verification
         buttons = [[InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="buy_prem")]]
         return await message.reply_text(
@@ -1494,8 +1494,8 @@ async def get_video(client: Client, message: Message):
     await db.update_free_usage(user_id)
     try:
         sent_msg = await send_random_video(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=caption,
             reply_markup=reply_markup,
@@ -1506,8 +1506,8 @@ async def get_video(client: Client, message: Message):
     except FloodWait as e:
         await asyncio.sleep(e.x)
         sent_msg = await send_random_video(
-            client, 
-            message.chat.id, 
+            client,
+            message.chat.id,
             protect=PROTECT_MODE,
             caption=caption,
             reply_markup=reply_markup,
@@ -1563,7 +1563,7 @@ async def not_joined(client: Client, message: Message):
 
     user_id = message.from_user.id
 
-    
+
     buttons = []
     count = 0
 
@@ -1585,7 +1585,7 @@ async def not_joined(client: Client, message: Message):
 
                     # Handle private channels and links
                     is_req_fsub = await db.get_request_forcesub_channel(chat_id)
-                    if is_req_fsub and not data.username: 
+                    if is_req_fsub and not data.username:
                         link = await db.get_stored_reqLink(chat_id)
                         await db.add_reqChannel(chat_id)
 
@@ -1645,7 +1645,7 @@ async def get_users(client: Bot, message: Message):
 
 
 @Bot.on_message(filters.command('status') & filters.private & is_admin)
-async def info(client: Bot, message: Message):   
+async def info(client: Bot, message: Message):
     reply_markup = InlineKeyboardMarkup(
         [[InlineKeyboardButton("• Close •", callback_data="close")]]
     )
@@ -1653,8 +1653,8 @@ async def info(client: Bot, message: Message):
     # Measure ping
     start_time = time.time()
     temp_msg = await message.reply(
-        "<b><i>Processing...</i></b>", 
-        quote=True, 
+        "<b><i>Processing...</i></b>",
+        quote=True,
         parse_mode=ParseMode.HTML
     )
     end_time = time.time()
@@ -1976,22 +1976,28 @@ async def check_plan(client: Client, message: Message):
 @Bot.on_message(filters.command(['forcesub', 'fsub', 'config', 'settings']) & filters.private & is_admin)
 async def fsub_commands(client: Client, message: Message):
     button = [
-        [InlineKeyboardButton("➕ Add Channel", callback_data="fsub_add"), InlineKeyboardButton("➖ Remove Channel", callback_data="fsub_remove")],
-        [InlineKeyboardButton("📋 List Channels", callback_data="fsub_list")],
+        [InlineKeyboardButton("🤖 Force Sub Settings", callback_data="fsub_main")],
+        [InlineKeyboardButton("📝 Caption Settings", callback_data="caption_settings"), InlineKeyboardButton("🔲 Button Settings", callback_data="button_settings")],
         [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
     ]
-    await message.reply(text="<b>🤖 Force Subscription Settings:</b>\n\nManage your force sub channels below. You can add up to 5 channels.", reply_markup=InlineKeyboardMarkup(button), quote=True)
+    await message.reply(
+        text="<b>⚙️ Main Settings Panel:</b>
+
+Manage your bot's configuration from here.",
+        reply_markup=InlineKeyboardMarkup(button),
+        quote=True
+    )
 
 
 @Bot.on_message(filters.command('help') & filters.private & ~banUser)
 async def help(client: Client, message: Message):
     buttons = [
         [
-            InlineKeyboardButton("🤖 Oᴡɴᴇʀ", url=f"tg://openmessage?user_id={OWNER_ID}"), 
+            InlineKeyboardButton("🤖 Oᴡɴᴇʀ", url=f"tg://openmessage?user_id={OWNER_ID}"),
             InlineKeyboardButton("🥰 Dᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/rohit1888")
         ]
     ]
-    
+
     try:
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -2103,7 +2109,7 @@ async def toggle_freemode(client: Client, message: Message):
 
     # Create buttons for ✅ and ❌ based on the new state
     caption_button = InlineKeyboardButton(
-        text="✅ Free Enabled" if new_state else "❌ Free  Disabled", 
+        text="✅ Free Enabled" if new_state else "❌ Free  Disabled",
         callback_data="toggle_caption"
     )
 
@@ -2142,21 +2148,21 @@ Free Usage Enabled: <code>{free_enabled}</code>"""
 @Bot.on_message(filters.command("referral") & filters.private)
 async def referral_command(client: Client, message: Message):
     user_id = message.from_user.id
-    
+
     # Get referral stats
     stats = await db.get_referral_stats(user_id)
     total_referrals = stats["total_referrals"]
-    
+
     # Generate referral link
     referral_link = f"https://telegram.dog/{client.username}?start=ref_{user_id}"
-    
+
     # Calculate progress
     remaining = max(0, REFERRAL_COUNT - total_referrals)
     progress_percent = min(100, (total_referrals / REFERRAL_COUNT) * 100) if REFERRAL_COUNT > 0 else 0
-    
+
     # Check if user already has premium
     is_premium = await is_premium_user(user_id)
-    
+
     status_message = f"""🎁 <b>Rᴇғᴇʀʀᴀʟ Sᴛᴀᴛs</b>
 
 📊 <b>Tᴏᴛᴀʟ Rᴇғᴇʀʀᴀʟs:</b> <code>{total_referrals}</code>
@@ -2164,7 +2170,7 @@ async def referral_command(client: Client, message: Message):
 📈 <b>Pʀᴏɢʀᴇss:</b> <code>{progress_percent:.1f}%</code>
 
 """
-    
+
     if total_referrals >= REFERRAL_COUNT:
         if is_premium:
             status_message += f"✅ <b>Yᴏᴜ'ᴠᴇ ᴇᴀʀɴᴇᴅ {REFERRAL_PREMIUM_DAYS} ᴅᴀʏs ᴏғ Pʀᴇᴍɪᴜᴍ!</b>\n\n"
@@ -2172,18 +2178,18 @@ async def referral_command(client: Client, message: Message):
             status_message += f"🎉 <b>Cᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴs! Yᴏᴜ'ᴠᴇ ᴇᴀʀɴᴇᴅ {REFERRAL_PREMIUM_DAYS} ᴅᴀʏs ᴏғ Pʀᴇᴍɪᴜᴍ!</b>\n\n"
     else:
         status_message += f"⏳ <b>Rᴇᴍᴀɪɴɪɴɢ:</b> <code>{remaining}</code> ᴍᴏʀᴇ ʀᴇғᴇʀʀᴀʟs ᴛᴏ ɢᴇᴛ {REFERRAL_PREMIUM_DAYS} ᴅᴀʏs ᴏғ Pʀᴇᴍɪᴜᴍ!\n\n"
-    
+
     status_message += f"🔗 <b>Yᴏᴜʀ Rᴇғᴇʀʀᴀʟ Lɪɴᴋ:</b>\n<code>{referral_link}</code>\n\n"
     status_message += f"💡 <b>Hᴏᴡ ɪᴛ ᴡᴏʀᴋs:</b>\n"
     status_message += f"1. Sʜᴀʀᴇ ʏᴏᴜʀ ʀᴇғᴇʀʀᴀʟ ʟɪɴᴋ\n"
     status_message += f"2. Wʜᴇɴ {REFERRAL_COUNT} ᴜsᴇʀs ᴊᴏɪɴ ᴜsɪɴɢ ʏᴏᴜʀ ʟɪɴᴋ\n"
     status_message += f"3. Yᴏᴜ ɢᴇᴛ {REFERRAL_PREMIUM_DAYS} ᴅᴀʏs ᴏғ Pʀᴇᴍɪᴜᴍ! 🎁"
-    
+
     buttons = [
         [InlineKeyboardButton("📤 Sʜᴀʀᴇ Lɪɴᴋ", url=f"https://t.me/share/url?url={referral_link}&text=Join%20this%20amazing%20bot!")],
         [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="buy_prem")]
     ]
-    
+
     await message.reply_text(
         status_message,
         reply_markup=InlineKeyboardMarkup(buttons),
@@ -2201,14 +2207,14 @@ async def set_caption_command(client: Client, message: Message):
                 "To remove caption, use: `/set_caption None`"
             )
             return
-        
+
         caption_text = message.text.split("/set_caption", 1)[1].strip()
-        
+
         if caption_text.lower() == "none":
             caption_text = None
-        
+
         success = await db.set_custom_caption(caption_text)
-        
+
         if success:
             if caption_text:
                 await message.reply_text(
@@ -2229,7 +2235,7 @@ async def set_caption_command(client: Client, message: Message):
 async def get_caption_command(client: Client, message: Message):
     try:
         caption = await db.get_custom_caption()
-        
+
         if caption:
             await message.reply_text(
                 f"📝 <b>Current Custom Caption:</b>\n\n{caption}",
@@ -2322,9 +2328,3 @@ async def store_photos_dynamic(app: Client):
             logging.info(f"Stored {len(all_photos)} new photos")
         except Exception as e:
             logging.error(f"Error inserting photos: {e}")
-
-
-
-
-
-

@@ -102,28 +102,28 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         try:
             action = data.replace("get_again_", "")
             user_id = query.from_user.id
-            
+
             # Extract user_id from action (format: get_photo_123 or get_video_123 or get_batch_123)
             # Split and get the last part as user_id
             parts = action.split("_")
             if len(parts) >= 3:
                 # Last part is always the user_id
                 action_user_id = int(parts[-1])
-                
+
                 if action_user_id != user_id:
                     await query.answer("❌ Unauthorized access!", show_alert=True)
                     return
-                
+
                 # Extract action type (photo, video, or batch)
                 action_type = parts[1]  # 'photo', 'video', or 'batch'
-                
+
                 await query.answer("🔄 Getting " + action_type + "...")
-                
+
                 # Use the query.message directly - it has all necessary attributes
                 # We just need to ensure from_user is set correctly
                 msg = query.message
                 msg.from_user = query.from_user
-                
+
                 # Call the appropriate function
                 from plugins.start import get_photo, get_video, get_batch
                 try:
@@ -255,7 +255,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 hide_caption, hcd = await fileSettings(db.get_hide_caption)
                 channel_button, cbd = await fileSettings(db.get_channel_button)
                 buttons_data = await db.get_channel_button_links()
-                
+
                 buttons_text = ""
                 for i in range(5):
                     if i < len(buttons_data):
@@ -288,7 +288,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 hide_caption, hcd = await fileSettings(db.get_hide_caption)
                 channel_button, cbd = await fileSettings(db.get_channel_button)
                 buttons_data = await db.get_channel_button_links()
-                
+
                 buttons_text = ""
                 for i in range(5):
                     if i < len(buttons_data):
@@ -321,7 +321,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 pic, hide_caption, hcd = await fileSettings(db.get_hide_caption, db.set_hide_caption)
                 channel_button, cbd = await fileSettings(db.get_channel_button)
                 buttons_data = await db.get_channel_button_links()
-                
+
                 buttons_text = ""
                 for i in range(5):
                     if i < len(buttons_data):
@@ -354,7 +354,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 hide_caption, hcd = await fileSettings(db.get_hide_caption)
                 pic, channel_button, cbd = await fileSettings(db.get_channel_button, db.set_channel_button)
                 buttons_data = await db.get_channel_button_links()
-                
+
                 buttons_text = ""
                 for i in range(5):
                     if i < len(buttons_data):
@@ -385,12 +385,12 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
             try:
                 buttons_data = await db.get_channel_button_links()
-                
+
                 # Create preview with existing buttons
                 button_preview = []
                 for btn in buttons_data:
                     button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
-                
+
                 example_text = (
                     '<b>Tᴏ sᴇᴛ ᴛʜᴇ ʙᴜᴛᴛᴏɴ(s), Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ᴀʀɢᴜᴍᴇɴᴛs ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ. Yᴏᴜ ᴄᴀɴ sᴇᴛ ᴜᴘ ᴛᴏ 5 ʙᴜᴛᴛᴏɴs.\n\n'
                     '<b>Sᴇᴘᴀʀᴀᴛᴇ ʙᴜᴛᴛᴏɴs ᴡɪᴛʜ | ᴏʀ ɴᴇᴡʟɪɴᴇs.</b>\n'
@@ -398,15 +398,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     '<i>Sᴇɴᴅ /clear_buttons ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴀʟʟ ʙᴜᴛᴛᴏɴs.</i>\n\n'
                     '<i>Bᴇʟᴏᴡ ɪs ᴄᴜʀʀᴇɴᴛ ʙᴜᴛᴛᴏɴ(s) Pʀᴇᴠɪᴇᴡ ⬇️</i></b>'
                 )
-                
+
                 set_msg = await client.ask(
-                    chat_id=id, 
-                    text=example_text, 
-                    timeout=60, 
-                    reply_markup=InlineKeyboardMarkup(button_preview) if button_preview else None, 
+                    chat_id=id,
+                    text=example_text,
+                    timeout=60,
+                    reply_markup=InlineKeyboardMarkup(button_preview) if button_preview else None,
                     disable_web_page_preview=True
                 )
-                
+
                 if set_msg.text.strip() == '/clear_buttons':
                     await db.set_channel_button_links([])
                     return await set_msg.reply("<b>All buttons have been cleared.</b>")
@@ -415,7 +415,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 raw_text = set_msg.text.replace('\n', ' | ')
 
                 parts = raw_text.split('|')
-                
+
                 new_buttons = []
                 for p in parts:
                     p = p.strip()
@@ -424,23 +424,23 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     if ' - ' in p:
                         name, link = p.split(' - ', 1)
                         new_buttons.append({'name': name.strip(), 'link': link.strip()})
-                        
+
                 if not new_buttons:
                     markup = [[InlineKeyboardButton(f'◈ Sᴇᴛ Cʜᴀɴɴᴇʟ Bᴜᴛᴛᴏɴ ➪', callback_data='setcb')]]
                     return await set_msg.reply(
-                        "<b>Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ᴀʀɢᴜᴍᴇɴᴛs. Fᴏʀᴍᴀᴛ: Nᴀᴍᴇ - Lɪɴᴋ</b>", 
+                        "<b>Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ᴀʀɢᴜᴍᴇɴᴛs. Fᴏʀᴍᴀᴛ: Nᴀᴍᴇ - Lɪɴᴋ</b>",
                         reply_markup=InlineKeyboardMarkup(markup)
                     )
-                
+
                 if len(new_buttons) > 5:
                     new_buttons = new_buttons[:5]
 
                 button_preview = []
                 for btn in new_buttons:
                     button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
-                
+
                 await set_msg.reply(
-                    "<b><i>Aᴅᴅᴇᴅ Sᴜᴄcᴇssғᴜʟʟʏ ✅</i>\n<blockquote>Sᴇᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴs ᴀs Pʀᴇᴠɪᴇᴡ ⬇️</blockquote></b>", 
+                    "<b><i>Aᴅᴅᴇᴅ Sᴜᴄcᴇssғᴜʟʟʏ ✅</i>\n<blockquote>Sᴇᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴs ᴀs Pʀᴇᴠɪᴇᴡ ⬇️</blockquote></b>",
                     reply_markup=InlineKeyboardMarkup(button_preview)
                 )
                 await db.set_channel_button_links(new_buttons)
@@ -483,17 +483,17 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 admins = await db.get_all_admins()
                 text = "<b>👥 Bᴏᴛ Aᴅᴍɪɴs</b>\n\n"
 
-                
+
                 if admins:
                     for idx, admin in enumerate(admins, 1):
                         text += f"<b>{idx}.</b> <code>{admin['_id']}</code>\n"
                 else:
                     text += "<i>Nᴏ ᴀᴅᴍɪɴs ᴀᴅᴅᴇᴅ ʏᴇᴛ.</i>\n"
-                
-                text += "\n<b>Tᴏ ᴀᴅᴅ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ ᴛʜᴇ ᴜsᴇʀ ID ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ.</b>\n<b>Tᴏ ʀᴇᴍᴏᴠᴇ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ <code>/del_admin &lt;user_id&gt;</code>.</b>" 
-                
+
+                text += "\n<b>Tᴏ ᴀᴅᴅ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ ᴛʜᴇ ᴜsᴇʀ ID ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ.</b>\n<b>Tᴏ ʀᴇᴍᴏᴠᴇ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ <code>/del_admin &lt;user_id&gt;</code>.</b>"
+
                 msg = await client.ask(chat_id=id, text=text, timeout=60)
-                
+
                 if msg.text.startswith('/del_admin'):
                     parts = msg.text.split()
                     if len(parts) == 2 and parts[1].isdigit():
@@ -508,7 +508,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     await msg.reply(f"<b>Aᴅᴍɪɴ <code>{new_admin}</code> ᴀᴅᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ✅</b>")
                 else:
                     await msg.reply("<b>❌ Iɴᴠᴀʟɪᴅ Iɴᴘᴜᴛ.</b>")
-                    
+
             except Exception as e:
                 try:
                     await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
@@ -857,12 +857,170 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
         except Exception as e:
             print(f"! Error Occurred on callback data = 'chng_req' : {e}")
+    elif data == "main_settings":
+        if await authoUser(query, query.from_user.id):
+            button = [
+                [InlineKeyboardButton("🤖 Force Sub Settings", callback_data="fsub_main")],
+                [InlineKeyboardButton("📝 Caption Settings", callback_data="caption_settings"), InlineKeyboardButton("🔲 Button Settings", callback_data="button_settings")],
+                [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
+            ]
+            await query.message.edit_text(
+                text="<b>⚙️ Main Settings Panel:</b>\n\nManage your bot's configuration from here.",
+                reply_markup=InlineKeyboardMarkup(button)
+            )
+
+    elif data == "caption_settings":
+        if await authoUser(query, query.from_user.id):
+            try:
+                caption = await db.get_custom_caption()
+                caption_text = caption if caption else "Not set"
+
+                button = [
+                    [InlineKeyboardButton("📝 Set/Change Caption", callback_data="set_caption_prompt")],
+                    [InlineKeyboardButton("🗑 Delete Caption", callback_data="delete_caption_prompt")],
+                    [InlineKeyboardButton("⬅️ Back", callback_data="main_settings")]
+                ]
+                await query.message.edit_text(
+                    text=f"<b>📝 Custom Caption Settings:</b>\n\n<b>Current Caption:</b>\n<code>{caption_text}</code>",
+                    reply_markup=InlineKeyboardMarkup(button)
+                )
+            except Exception as e:
+                logging.error(f"Error loading caption settings: {e}")
+                await query.answer("❌ Error loading caption settings.", show_alert=True)
+
+    elif data == "set_caption_prompt":
+        id = query.from_user.id
+        if await authoUser(query, id):
+            await query.answer("♻️ Processing...")
+            try:
+                caption = await db.get_custom_caption()
+                msg = await client.ask(
+                    chat_id=id,
+                    text=f"<b>Send Custom Caption within 1 minute. You can use HTML tags.\nSend <code>/clear_caption</code> to remove it.\n\n<blockquote>Current Caption:</blockquote></b> {caption}",
+                    timeout=60
+                )
+                if msg.text.strip() == '/clear_caption':
+                    await db.set_custom_caption("")
+                    await msg.reply("<b>Caption cleared.</b>")
+                else:
+                    await db.set_custom_caption(msg.text.strip())
+                    await msg.reply("<b>Custom Caption Set Successfully ✅</b>")
+            except Exception as e:
+                try:
+                    await client.send_message(id, text=f"<b>! Error Occurred..\n<blockquote><i>Reason: Timeout or Error ..</i></b></blockquote>", disable_notification=True)
+                except BaseException:
+                    pass
+
+    elif data == "delete_caption_prompt":
+        if await authoUser(query, query.from_user.id):
+            await db.set_custom_caption("")
+            await query.answer("✅ Caption deleted successfully.", show_alert=True)
+            # Refresh caption settings
+            query.data = "caption_settings"
+            await cb_handler(client, query)
+
+    elif data == "button_settings":
+        if await authoUser(query, query.from_user.id):
+            try:
+                buttons_data = await db.get_channel_button_links()
+
+                button_preview = []
+                for btn in buttons_data:
+                    button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+
+                button = [
+                    [InlineKeyboardButton("🔲 Set/Change Buttons", callback_data="set_button_prompt")],
+                    [InlineKeyboardButton("🗑 Delete Buttons", callback_data="delete_button_prompt")],
+                    [InlineKeyboardButton("⬅️ Back", callback_data="main_settings")]
+                ]
+                await query.message.edit_text(
+                    text="<b>🔲 Custom Button Settings:</b>\n\n<b>Current Buttons (Preview):</b>",
+                    reply_markup=InlineKeyboardMarkup(button_preview + button),
+                    disable_web_page_preview=True
+                )
+            except Exception as e:
+                logging.error(f"Error loading button settings: {e}")
+                await query.answer("❌ Error loading button settings.", show_alert=True)
+
+    elif data == "set_button_prompt":
+        id = query.from_user.id
+        if await authoUser(query, id):
+            await query.answer("♻️ Processing...")
+            try:
+                buttons_data = await db.get_channel_button_links()
+
+                button_preview = []
+                for btn in buttons_data:
+                    button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+
+                example_text = (
+                    '<b>To set the button(s), Please send valid arguments within 1 minute. You can set up to 5 buttons.\n\n'
+                    '<b>Separate buttons with | or newlines.</b>\n'
+                    '<blockquote><code>Join Channel - https://t.me/btth480p | Support - https://t.me/support</code></blockquote>\n\n'
+                    '<i>Send /clear_buttons to remove all buttons.</i>\n\n'
+                    '<i>Below is current button(s) Preview ⬇️</i></b>'
+                )
+
+                set_msg = await client.ask(
+                    chat_id=id,
+                    text=example_text,
+                    timeout=60,
+                    reply_markup=InlineKeyboardMarkup(button_preview) if button_preview else None,
+                    disable_web_page_preview=True
+                )
+
+                if set_msg.text.strip() == '/clear_buttons':
+                    await db.set_channel_button_links([])
+                    await set_msg.reply("<b>All buttons have been cleared.</b>")
+                else:
+                    raw_text = set_msg.text.replace('\n', ' | ')
+                    parts = raw_text.split('|')
+
+                    new_buttons = []
+                    for p in parts:
+                        p = p.strip()
+                        if not p:
+                            continue
+                        if ' - ' in p:
+                            name, link = p.split(' - ', 1)
+                            new_buttons.append({'name': name.strip(), 'link': link.strip()})
+
+                    if not new_buttons:
+                        return await set_msg.reply("<b>Please send valid arguments. Format: Name - Link</b>")
+
+                    if len(new_buttons) > 5:
+                        new_buttons = new_buttons[:5]
+
+                    await db.set_channel_button_links(new_buttons)
+
+                    button_preview = []
+                    for btn in new_buttons:
+                        button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+
+                    await set_msg.reply(
+                        "<b><i>Buttons Added Successfully ✅</i>\n<blockquote>See below buttons as Preview ⬇️</blockquote></b>",
+                        reply_markup=InlineKeyboardMarkup(button_preview)
+                    )
+            except Exception as e:
+                try:
+                    await client.send_message(id, text=f"<b>! Error Occurred..\n<blockquote><i>Reason: Timeout or Error ..</i></b></blockquote>", disable_notification=True)
+                except BaseException:
+                    pass
+
+    elif data == "delete_button_prompt":
+        if await authoUser(query, query.from_user.id):
+            await db.set_channel_button_links([])
+            await query.answer("✅ Buttons deleted successfully.", show_alert=True)
+            # Refresh button settings
+            query.data = "button_settings"
+            await cb_handler(client, query)
+
     elif data == "fsub_main":
         if await authoUser(query, query.from_user.id):
             button = [
                 [InlineKeyboardButton("➕ Add Channel", callback_data="fsub_add"), InlineKeyboardButton("➖ Remove Channel", callback_data="fsub_remove")],
                 [InlineKeyboardButton("📋 List Channels", callback_data="fsub_list")],
-                [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
+                [InlineKeyboardButton("⬅️ Back", callback_data="main_settings")]
             ]
             await query.message.edit_text(text="<b>🤖 Force Subscription Settings:</b>\n\nManage your force sub channels below. You can add up to 5 channels.", reply_markup=InlineKeyboardMarkup(button))
 
@@ -880,7 +1038,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     text="<b>Please send the Channel ID you want to add for force sub:</b>\n\n<i>Make sure the bot is an admin in that channel before sending the ID.</i>",
                     timeout=60
                 )
-                
+
                 channel_id_str = prompt_msg.text.strip()
                 try:
                     channel_id = int(channel_id_str)
@@ -896,7 +1054,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     from pyrogram.enums import ChatMemberStatus
                     chat = await client.get_chat(channel_id)
                     member = await client.get_chat_member(channel_id, client.me.id)
-                    
+
                     if member.status not in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
                          await prompt_msg.reply("❌ The bot is not an admin in the specified channel. Please promote the bot to admin and try again.")
                          return
@@ -962,9 +1120,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 except:
                     title = str(channel_id)
                 buttons.append([InlineKeyboardButton(f"❌ Remove {title}", callback_data=f"fsub_del_{channel_id}")])
-            
+
             buttons.append([InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")])
-            
+
             await query.message.edit_text(
                 "<b>Select a channel to remove:</b>",
                 reply_markup=InlineKeyboardMarkup(buttons)
@@ -973,7 +1131,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     elif data.startswith("fsub_del_"):
         if await authoUser(query, query.from_user.id):
             channel_id = int(data.split("_")[2])
-            
+
             try:
                 stored_link = await db.get_stored_reqLink(channel_id)
                 if stored_link:
@@ -986,7 +1144,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await db.del_stored_reqLink(channel_id)
 
             await query.answer("✅ Channel removed successfully.", show_alert=True)
-            
+
             query.data = "fsub_remove"
             await cb_handler(client, query)
 
@@ -1007,7 +1165,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     title = chat.title
                 except:
                     title = "Unknown Channel"
-                
+
                 is_req = await db.get_request_forcesub_channel(channel_id)
                 mode_str = "Request" if is_req else "Direct"
                 text += f"◈ <b>{title}</b> (<code>{channel_id}</code>) - Mode: <i>{mode_str}</i>\n"
@@ -1017,7 +1175,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Back", callback_data="fsub_main")]])
             )
 
-    
+
 
     # Handle shortener settings
     elif data == "shortener_settings":
@@ -1071,7 +1229,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 )
 
 
-    elif data == "chng_shortener": 
+    elif data == "chng_shortener":
         user_id = query.from_user.id
         shortener_details = await db.get_shortener()
 
@@ -1085,7 +1243,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await query.answer("Shortener Enabled ✅. Please provide the Shortener URL and API Key.", show_alert=True)
             await query.message.reply("Send the Shortener URL and API Key in the format:\n`<shortener_url> <api_key>`")
 
-    
+
 
 
     elif data == 'set_shortener_details':
@@ -1125,7 +1283,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             # Step 4: Save the shortener details in the database
                 await db.set_shortener_url(shortener_url)
                 await db.set_shortener_api(api_key)
-            
+
             # Confirmation message
                 await api_msg.reply(
                     "✅ Shortener details have been successfully set!",
@@ -1196,7 +1354,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
         if await authoUser(query, id, owner_only=True):
             await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
-        
+
             try:
             # Fetch the current tutorial video URL from the database
                 current_video_url = await db.get_tut_video()
@@ -1265,7 +1423,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     # Save the new verified time to the database
                     await db.set_verified_time(verify_time)
                     formatted_time = f"{verify_time} seconds"
-                    
+
                     # Confirm the update to the user
                     await set_msg.reply(
                         f"<b><i>Timer updated successfully ✅</i>\n"
@@ -1341,7 +1499,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == "disable_shortener":
         await query.answer()
-    
+
     # Deactivate the shortener
         success = await db.deactivate_shortener()
         if success:
@@ -1354,7 +1512,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             )
         else:
             await query.message.reply("Failed to disable the shortener. Please try again.")
-    
 
-    
+
+
     
