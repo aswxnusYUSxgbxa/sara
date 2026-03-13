@@ -5,7 +5,6 @@ import time
 import pymongo, os
 import motor
 from config import DB_URI, DB_NAME
-
 import logging
 from datetime import datetime, timedelta
 
@@ -277,20 +276,14 @@ class Rohit:
         await self.channel_button_link_data.delete_many({})  # Remove all existing documents
         await self.channel_button_link_data.insert_one({'button_name': button_name, 'button_link': button_link}) # Insert the new document
 
-    async def set_channel_button_links(self, buttons: list):
-        """Set up to 5 channel buttons. Expects a list of dicts with 'name' and 'link' keys."""
-        data = {}
-        for i, btn in enumerate(buttons[:5]):
-            if i == 0:
-                data['button_name'] = btn.get('name')
-                data['button_link'] = btn.get('link')
-            else:
-                data[f'button_name{i+1}'] = btn.get('name')
-                data[f'button_link{i+1}'] = btn.get('link')
-
-        await self.channel_button_link_data.delete_many({})
-        if data:
-            await self.channel_button_link_data.insert_one(data)
+    async def set_channel_button_links(self, button_name: str, button_link: str, button_name2: str = None, button_link2: str = None):
+        """Set both channel buttons (button1 and button2)"""
+        data = {'button_name': button_name, 'button_link': button_link}
+        if button_name2 and button_link2:
+            data['button_name2'] = button_name2
+            data['button_link2'] = button_link2
+        await self.channel_button_link_data.delete_many({})  # Remove all existing documents
+        await self.channel_button_link_data.insert_one(data)  # Insert the new document
 
     async def get_channel_button_link(self):
         data = await self.channel_button_link_data.find_one({})
@@ -299,16 +292,15 @@ class Rohit:
         return ' Channel', 'https://t.me/Javpostr'
 
     async def get_channel_button_links(self):
-        """Get all channel buttons"""
+        """Get both channel buttons (button1 and button2)"""
         data = await self.channel_button_link_data.find_one({})
-        buttons = []
         if data:
-            if data.get('button_name') and data.get('button_link'):
-                buttons.append({'name': data.get('button_name'), 'link': data.get('button_link')})
-            for i in range(2, 6):
-                if data.get(f'button_name{i}') and data.get(f'button_link{i}'):
-                    buttons.append({'name': data.get(f'button_name{i}'), 'link': data.get(f'button_link{i}')})
-        return buttons
+            return (
+                data.get('button_name'), data.get('button_link'),
+                data.get('button_name2'), data.get('button_link2')
+            )
+        return ' Channel', 'https://t.me/Javpostr', None, None
+
 
     # DELETE TIMER SETTINGS
     async def set_del_timer(self, value: int):
