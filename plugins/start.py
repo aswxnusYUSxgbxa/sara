@@ -719,19 +719,14 @@ async def get_photo(client: Client, message: Message):
             reply_markup = None
             if CHNL_BTN:
                 try:
-                    button_name, button_link, button_name2, button_link2 = await db.get_channel_button_links()
+                    buttons_data = await db.get_channel_button_links()
                     buttons = []
-                    if button_name and button_link:
-                        buttons.append([InlineKeyboardButton(text=button_name, url=button_link)])
-                    if button_name2 and button_link2:
-                        if buttons:
-                            buttons[0].append(InlineKeyboardButton(text=button_name2, url=button_link2))
-                        else:
-                            buttons.append([InlineKeyboardButton(text=button_name2, url=button_link2)])
+                    for btn in buttons_data:
+                        buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
                     if buttons:
                         reply_markup = InlineKeyboardMarkup(buttons)
-                except Exception:
-                    pass
+                except Exception as e:
+                    logging.error(f"Error building buttons: {e}")
 
             try:
                 sent_msg = await send_random_photo(
@@ -889,11 +884,14 @@ async def get_photo(client: Client, message: Message):
     reply_markup = None
     if CHNL_BTN:
         try:
-            button_name, button_link = await db.get_channel_button_link()
-            if button_name and button_link:
-                reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text=button_name, url=button_link)]])
-        except Exception:
-            pass
+            buttons_data = await db.get_channel_button_links()
+            buttons = []
+            for btn in buttons_data:
+                buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+            if buttons:
+                reply_markup = InlineKeyboardMarkup(buttons)
+        except Exception as e:
+            logging.error(f"Error building buttons: {e}")
 
     # Deduct usage and send photo
     await db.update_free_usage(user_id)
@@ -1315,19 +1313,14 @@ async def get_video(client: Client, message: Message):
             reply_markup = None
             if CHNL_BTN:
                 try:
-                    button_name, button_link, button_name2, button_link2 = await db.get_channel_button_links()
+                    buttons_data = await db.get_channel_button_links()
                     buttons = []
-                    if button_name and button_link:
-                        buttons.append([InlineKeyboardButton(text=button_name, url=button_link)])
-                    if button_name2 and button_link2:
-                        if buttons:
-                            buttons[0].append(InlineKeyboardButton(text=button_name2, url=button_link2))
-                        else:
-                            buttons.append([InlineKeyboardButton(text=button_name2, url=button_link2)])
+                    for btn in buttons_data:
+                        buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
                     if buttons:
                         reply_markup = InlineKeyboardMarkup(buttons)
-                except Exception:
-                    pass
+                except Exception as e:
+                    logging.error(f"Error building buttons: {e}")
 
             try:
                 sent_msg = await send_random_video(
@@ -1484,11 +1477,14 @@ async def get_video(client: Client, message: Message):
     reply_markup = None
     if CHNL_BTN:
         try:
-            button_name, button_link = await db.get_channel_button_link()
-            if button_name and button_link:
-                reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text=button_name, url=button_link)]])
-        except Exception:
-            pass
+            buttons_data = await db.get_channel_button_links()
+            buttons = []
+            for btn in buttons_data:
+                buttons.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
+            if buttons:
+                reply_markup = InlineKeyboardMarkup(buttons)
+        except Exception as e:
+            logging.error(f"Error building buttons: {e}")
 
     # Deduct usage and send video
     await db.update_free_usage(user_id)
@@ -1976,11 +1972,15 @@ async def check_plan(client: Client, message: Message):
 @Bot.on_message(filters.command(['forcesub', 'fsub', 'config', 'settings']) & filters.private & is_admin)
 async def fsub_commands(client: Client, message: Message):
     button = [
-        [InlineKeyboardButton("➕ Add Channel", callback_data="fsub_add"), InlineKeyboardButton("➖ Remove Channel", callback_data="fsub_remove")],
-        [InlineKeyboardButton("📋 List Channels", callback_data="fsub_list")],
+        [InlineKeyboardButton("🤖 Force Sub Settings", callback_data="fsub_main")],
+        [InlineKeyboardButton("📝 Caption Settings", callback_data="caption_settings"), InlineKeyboardButton("🔲 Button Settings", callback_data="button_settings")],
         [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
     ]
-    await message.reply(text="<b>🤖 Force Subscription Settings:</b>\n\nManage your force sub channels below. You can add up to 5 channels.", reply_markup=InlineKeyboardMarkup(button), quote=True)
+    await message.reply(
+        text="<b>⚙️ Main Settings Panel:</b>\n\nManage your bot's configuration from here.",
+        reply_markup=InlineKeyboardMarkup(button), 
+        quote=True
+    )
 
 
 @Bot.on_message(filters.command('help') & filters.private & ~banUser)

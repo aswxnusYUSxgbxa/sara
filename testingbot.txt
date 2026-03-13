@@ -85,3 +85,24 @@ TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
 [13-Mar-26 17:44:24 - INFO] - __main__ - Bot Username: @whapiybbot
 [13-Mar-26 17:44:25 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
 [13-Mar-26 18:05:46 - INFO] - root - Received /start command from user ID: 1137799257
+[13-Mar-26 19:30:00 - INFO] - root - All free usage counts reset.
+[13-Mar-26 19:45:57 - INFO] - __main__ - Shutting down...
+[13-Mar-26 20:30:55 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 20:30:55 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 20:30:55 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 20:41:57 - INFO] - __main__ - Shutting down...
+[13-Mar-26 20:42:10 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 20:42:10 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 20:42:10 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 20:44:00 - INFO] - __main__ - Shutting down...
+[13-Mar-26 20:44:31 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 20:44:31 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 20:44:31 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 20:47:28 - INFO] - __main__ - Shutting down...
+[13-Mar-26 20:47:44 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 20:47:44 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 20:47:45 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 21:06:18 - INFO] - __main__ - Shutting down...
+[13-Mar-26 21:06:35 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[13-Mar-26 21:06:35 - INFO] - __main__ - Bot Username: @whapiybbot
+[13-Mar-26 21:06:35 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888

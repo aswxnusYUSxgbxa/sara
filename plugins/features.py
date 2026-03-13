@@ -397,11 +397,11 @@ async def files_commands(client: Client, message: Message):
         if await db.get_channel_button():
             channel_button = on_txt
             cbd = '✅'
-        name, link, name2, link2 = await db.get_channel_button_links()
-        if not name2:
-            name2 = "Not Set"
-        if not link2:
-            link2 = "Not Set"
+        buttons_data = await db.get_channel_button_links()
+        name = buttons_data[0]['name'] if len(buttons_data) > 0 else "Not Set"
+        link = buttons_data[0]['link'] if len(buttons_data) > 0 else "Not Set"
+        name2 = buttons_data[1]['name'] if len(buttons_data) > 1 else "Not Set"
+        link2 = buttons_data[1]['link'] if len(buttons_data) > 1 else "Not Set"
 
         await message.reply_photo(
             photo = files_cmd_pic,
