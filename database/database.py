@@ -474,6 +474,12 @@ class Rohit:
         upsert=True
     )
 
+    async def get_request_forcesub_channel(self, channel_id: int):
+        data = await self.rqst_fsub_Channel_data.find_one({"_id": channel_id})
+        if data:
+            return data.get("fsub_mode", False)
+        return False
+
     # Method 1: Add user to the channel set
     async def reqSent_user(self, channel_id: int, user_id: int):
         # Add the user to the set of users for a specific channel
