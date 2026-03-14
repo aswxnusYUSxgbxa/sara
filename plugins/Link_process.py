@@ -46,7 +46,7 @@ async def update_bot(client, message):
 
         await asyncio.sleep(3)
 
-        await msg.edit_text("<b><blockquote>✅ Bᴏᴛ ɪs ʀᴇsᴛᴀʀᴛɪɴɢ ɴᴏᴡ...</blockquote></b>")
+        await msg.edit_text("<b><blockquote>✅ Bot is restarting now...</blockquote></b>")
 
     except Exception as e:
         await message.reply_text(f"An error occurred: {e}")
@@ -58,8 +58,8 @@ async def update_bot(client, message):
 
 @Bot.on_message(filters.private & ~filters.command([
     'start', 'users', 'broadcast', 'stats', 'addpaid', 'removepaid', 'listpaid',
-    'help', 'add_fsub', 'fsub_chnl', 'restart', 'del_fsub', 'add_admins', 'del_admins', 
-    'admin_list', 'cancel', 'auto_del', 'forcesub', 'fsub', 'config', 'settings', 'files', 'add_banuser', 'token', 'del_banuser', 'banuser_list', 
+    'help', 'add_fsub', 'fsub_chnl', 'restart', 'del_fsub', 'add_admins', 'del_admins',
+    'admin_list', 'cancel', 'auto_del', 'forcesub', 'fsub', 'config', 'settings', 'files', 'add_banuser', 'token', 'del_banuser', 'banuser_list',
     'status', 'req_fsub', 'myplan', 'short', 'check', 'free', 'set_free_limit', 'update', 'status', 'genlink', 'batch', 'custom_batch', 'referral'])# ✅ ADD EXCEPTION FOR BUTTON TEXTS
     & ~filters.regex("^Get Video 🍒$")
     & ~filters.regex("^Get Photo 📸$")
