@@ -13,7 +13,7 @@ I can Download terabox files and having Advanced features 😎 ."""
 
 
 #Force sub message 
-FORCE_MSG = """<b>👋 Hᴇʟʟᴏ {mention},\n\n🔒 Yᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴏᴜʀ ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟs ᴛᴏ ᴄᴏɴᴛɪɴᴜᴇ ᴜsɪɴɢ ᴛʜɪs ʙᴏᴛ!\n\nPʟᴇᴀsᴇ ᴊᴏɪɴ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ(s) ᴜsɪɴɢ ᴛʜᴇ ʟɪɴᴋs ʙᴇʟᴏᴡ, ᴛʜᴇɴ ᴄʟɪᴄᴋ "I'ᴠᴇ Jᴏɪɴᴇᴅ ✅" ᴛᴏ ᴄᴏɴᴛɪɴᴜᴇ.\n\n❗ Fᴀᴄɪɴɢ ᴘʀᴏʙʟᴇᴍs? ᴜsᴇ: /help</b>"""
+FORCE_MSG = """<b>Hello {mention},\n\nYou have to join this channel to access media in this bot.</b>"""
 
 
 

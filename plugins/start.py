@@ -1641,7 +1641,7 @@ async def schedule_spam_notification(client: Client, user_id: int, action_type: 
         logging.error(f"Failed to schedule spam notification: {e}")
 
 async def not_joined(client: Client, message: Message):
-    temp = await message.reply(f"<b>??</b>")
+
 
     user_id = message.from_user.id
 
@@ -1651,7 +1651,7 @@ async def not_joined(client: Client, message: Message):
 
     try:
         for total, chat_id in enumerate(await db.get_all_channels(), start=1):
-            await message.reply_chat_action(ChatAction.PLAYING)
+
 
             # Show the join button of non-subscribed Channels.....
             if not await is_userJoin(client, user_id, chat_id):
@@ -1680,7 +1680,7 @@ async def not_joined(client: Client, message: Message):
                     # Add button for the chat
                     buttons.append([InlineKeyboardButton(text=cname, url=link)])
                     count += 1
-                    await temp.edit(f"<b>{'! ' * count}</b>")
+
 
                 except Exception as e:
                     print(f"Can't Export Channel Name and Link..., Please Check If the Bot is admin in the FORCE SUB CHANNELS:\nProvided Force sub Channel:- {chat_id}. Exception: {e}")
@@ -1723,7 +1723,7 @@ async def not_joined(client: Client, message: Message):
     except Exception as e:
         print(f"Error: {e}")  # Print the error message for debugging
         # Optionally, send an error message to the user or handle further actions here
-        await temp.edit(f"<b><i>! Eʀʀᴏʀ, Cᴏɴᴛᴀᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ ᴛᴏ sᴏʟᴠᴇ ᴛʜᴇ ɪssᴜᴇs @rohit_1888</i></b>\n<blockquote expandable><b>Rᴇᴀsᴏɴ:</b> {e}</blockquote>")
+        await message.reply(f"<b><i>! Eʀʀᴏʀ, Cᴏɴᴛᴀᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ ᴛᴏ sᴏʟᴠᴇ ᴛʜᴇ ɪssᴜᴇs @rohit_1888</i></b>\n<blockquote expandable><b>Rᴇᴀsᴏɴ:</b> {e}</blockquote>")
 
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(OWNER_ID))
