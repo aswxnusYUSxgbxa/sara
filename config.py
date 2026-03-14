@@ -28,7 +28,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "1137799257"))
 
 
 PORT = os.environ.get("PORT", "3435")
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://latx:latx@cluster0.3aavadq.mongodb.net/?appName=Cluster0")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://bot:bot@cluster0.8vepzds.mongodb.net/?retryWrites=true&w=majority")
 
 DB_NAME = os.environ.get("DATABASE_NAME", "orion")
 
