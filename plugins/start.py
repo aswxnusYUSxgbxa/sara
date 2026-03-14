@@ -260,7 +260,7 @@ async def start_command(client: Client, message: Message):
     
     
     await message.reply_text(
-        text="👇 **Use the menu below to navigate:**",
+        text="👇Use the menu below to navigate",
         reply_markup=reply_kb
     )
                     
@@ -1408,31 +1408,37 @@ async def get_video(client: Client, message: Message):
                 except Exception as e:
                     logging.error(f"Error building buttons: {e}")
 
-            try:
-                sent_msg = await send_random_video(
-                    client, 
-                    message.chat.id, 
-                    protect=PROTECT_MODE,
-                    caption=caption,
-                    reply_markup=reply_markup,
-                    hide_caption=HIDE_CAPTION
-                )
-                if AUTO_DEL and sent_msg:
-                    asyncio.create_task(auto_del_notification(client.username, sent_msg, DEL_TIMER, f"get_video_{user_id}"))
-                return sent_msg
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-                sent_msg = await send_random_video(
-                    client, 
-                    message.chat.id, 
-                    protect=PROTECT_MODE,
-                    caption=caption,
-                    reply_markup=reply_markup,
-                    hide_caption=HIDE_CAPTION
-                )
-                if AUTO_DEL and sent_msg:
-                    asyncio.create_task(auto_del_notification(client.username, sent_msg, DEL_TIMER, f"get_video_{user_id}"))
-                return sent_msg
+            sent_msgs = []
+            for _ in range(5):
+                try:
+                    sent_msg = await send_random_video(
+                        client, 
+                        message.chat.id, 
+                        protect=PROTECT_MODE,
+                        caption=caption,
+                        reply_markup=reply_markup,
+                        hide_caption=HIDE_CAPTION
+                    )
+                    if sent_msg:
+                        sent_msgs.append(sent_msg)
+                except FloodWait as e:
+                    await asyncio.sleep(e.x)
+                    sent_msg = await send_random_video(
+                        client, 
+                        message.chat.id, 
+                        protect=PROTECT_MODE,
+                        caption=caption,
+                        reply_markup=reply_markup,
+                        hide_caption=HIDE_CAPTION
+                    )
+                    if sent_msg:
+                        sent_msgs.append(sent_msg)
+                await asyncio.sleep(0.5)
+
+            if AUTO_DEL and sent_msgs:
+                asyncio.create_task(auto_del_notification(client.username, sent_msgs[-1], DEL_TIMER, f"get_video_{user_id}", is_batch=True, all_messages=sent_msgs))
+            
+            return sent_msgs
 
     
     
@@ -1574,29 +1580,35 @@ async def get_video(client: Client, message: Message):
 
     
     await db.update_free_usage(user_id)
-    try:
-        sent_msg = await send_random_video(
-            client, 
-            message.chat.id, 
-            protect=PROTECT_MODE,
-            caption=caption,
-            reply_markup=reply_markup,
-            hide_caption=HIDE_CAPTION
-        )
-        if AUTO_DEL and sent_msg:
-            asyncio.create_task(auto_del_notification(client.username, sent_msg, DEL_TIMER, f"get_video_{user_id}"))
-    except FloodWait as e:
-        await asyncio.sleep(e.x)
-        sent_msg = await send_random_video(
-            client, 
-            message.chat.id, 
-            protect=PROTECT_MODE,
-            caption=caption,
-            reply_markup=reply_markup,
-            hide_caption=HIDE_CAPTION
-        )
-        if AUTO_DEL and sent_msg:
-            asyncio.create_task(auto_del_notification(client.username, sent_msg, DEL_TIMER, f"get_video_{user_id}"))
+    sent_msgs = []
+    for _ in range(5):
+        try:
+            sent_msg = await send_random_video(
+                client, 
+                message.chat.id, 
+                protect=PROTECT_MODE,
+                caption=caption,
+                reply_markup=reply_markup,
+                hide_caption=HIDE_CAPTION
+            )
+            if sent_msg:
+                sent_msgs.append(sent_msg)
+        except FloodWait as e:
+            await asyncio.sleep(e.x)
+            sent_msg = await send_random_video(
+                client, 
+                message.chat.id, 
+                protect=PROTECT_MODE,
+                caption=caption,
+                reply_markup=reply_markup,
+                hide_caption=HIDE_CAPTION
+            )
+            if sent_msg:
+                sent_msgs.append(sent_msg)
+        await asyncio.sleep(0.5)
+
+    if AUTO_DEL and sent_msgs:
+        asyncio.create_task(auto_del_notification(client.username, sent_msgs[-1], DEL_TIMER, f"get_video_{user_id}", is_batch=True, all_messages=sent_msgs))
 
 
 
@@ -2060,6 +2072,7 @@ async def fsub_commands(client: Client, message: Message):
     button = [
         [InlineKeyboardButton("🤖 Force Sub Settings", callback_data="fsub_main")],
         [InlineKeyboardButton("📝 Caption Settings", callback_data="caption_settings"), InlineKeyboardButton("🔲 Button Settings", callback_data="button_settings")],
+        [InlineKeyboardButton("🗑 Auto Delete Settings", callback_data="autodel_cmd"), InlineKeyboardButton("🔒 Protect Content", callback_data="files_cmd")],
         [InlineKeyboardButton("Close ✖️", callback_data="close")]
     ]
     await message.reply(

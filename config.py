@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 #Bot token @Botfather
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8387996820:AAHZ6YN_HIYdHG6nJ4QXR7bZmFXL9fBiAg4")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7489470298:AAFUWKIkH-1CrH0NFBBj2HtBxtRGthZUfnk")
 
 
 APP_ID = int(os.environ.get("APP_ID", "9698652"))
@@ -15,7 +15,7 @@ APP_ID = int(os.environ.get("APP_ID", "9698652"))
 API_HASH = os.environ.get("API_HASH", "b354710ab18b84e00b65c62ba7a9c043")
 
 
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002454896752"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1003478626769"))
 
 MIN_ID = int(os.getenv("MIN_ID", 1))
 MAX_ID = int(os.getenv("MAX_ID", 150))
@@ -28,7 +28,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "1137799257"))
 
 
 PORT = os.environ.get("PORT", "3435")
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://bot:bot@cluster0.8vepzds.mongodb.net/?retryWrites=true&w=majority")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://latx:latx@cluster0.3aavadq.mongodb.net/?appName=Cluster0")
 
 DB_NAME = os.environ.get("DATABASE_NAME", "orion")
 

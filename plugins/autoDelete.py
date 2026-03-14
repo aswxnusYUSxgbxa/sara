@@ -54,15 +54,24 @@ async def auto_del_notification(bot_username, msg, delay_time, transfer, is_batc
                 await temp.edit_text(text=f"<b>Previous Message was Deleted \n<blockquote>If you want to get the files again, then click the button below else close this message.</blockquote></b>", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview = True)
 
             except Exception as e:
-                await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>")
                 print(f"Error occured while editing the Delete message: {e}")
+                try:
+                    await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>")
+                except Exception:
+                    pass
         else:
             button = [[InlineKeyboardButton(text="Close ✖️", callback_data="close")]]
-            await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>", reply_markup=InlineKeyboardMarkup(button))
+            try:
+                await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>", reply_markup=InlineKeyboardMarkup(button))
+            except Exception:
+                pass
 
     except Exception as e:
         print(f"Error occured while editing the Delete message: {e}")
-        await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>")
+        try:
+            await temp.edit_text(f"<b><blockquote>Previous Message was Deleted </blockquote></b>")
+        except Exception:
+            pass
 
     
     if is_batch and all_messages and isinstance(all_messages, list):
