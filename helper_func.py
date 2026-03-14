@@ -73,8 +73,8 @@ async def is_userJoin(client, user_id, channel_id):
         return member.status in {ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER}
 
     except UserNotParticipant:
-        if await db.get_request_forcesub(): #and await privateChannel(client, channel_id):
-                return await db.reqSent_user_exist(channel_id, user_id)
+        if await db.get_request_forcesub() or await db.get_request_forcesub_channel(channel_id):
+            return await db.reqSent_user_exist(channel_id, user_id)
 
         return False
 
