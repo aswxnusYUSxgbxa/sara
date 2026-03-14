@@ -385,8 +385,8 @@ class Rohit:
     async def get_channel_button(self):
         data = await self.channel_button_data.find_one({})
         if data:
-            return data.get('value', False)
-        return False
+            return data.get('value', True)
+        return True
 
     async def get_request_forcesub(self):
         data = await self.rqst_fsub_data.find_one({})

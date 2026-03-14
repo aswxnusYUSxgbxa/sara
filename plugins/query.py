@@ -444,6 +444,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     reply_markup=InlineKeyboardMarkup(button_preview)
                 )
                 await db.set_channel_button_links(new_buttons)
+                await db.set_channel_button(True)
                 return
             except Exception as e:
                 try:
@@ -992,6 +993,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         new_buttons = new_buttons[:5]
 
                     await db.set_channel_button_links(new_buttons)
+                    await db.set_channel_button(True)
                     
                     button_preview = []
                     for btn in new_buttons:

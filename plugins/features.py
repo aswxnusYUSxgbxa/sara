@@ -398,10 +398,13 @@ async def files_commands(client: Client, message: Message):
             channel_button = on_txt
             cbd = '✅'
         buttons_data = await db.get_channel_button_links()
-        name = buttons_data[0]['name'] if len(buttons_data) > 0 else "Not Set"
-        link = buttons_data[0]['link'] if len(buttons_data) > 0 else "Not Set"
-        name2 = buttons_data[1]['name'] if len(buttons_data) > 1 else "Not Set"
-        link2 = buttons_data[1]['link'] if len(buttons_data) > 1 else "Not Set"
+        buttons_text = ""
+        for i in range(5):
+            if i < len(buttons_data):
+                btn = buttons_data[i]
+                buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: {btn['name']}\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: {btn['link']}\n"
+            else:
+                buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: Not Set\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: Not Set\n"
 
         await message.reply_photo(
             photo = files_cmd_pic,
@@ -409,10 +412,7 @@ async def files_commands(client: Client, message: Message):
                 protect_content = protect_content,
                 hide_caption = hide_caption,
                 channel_button = channel_button,
-                name = name,
-                link = link,
-                name2 = name2,
-                link2 = link2
+                buttons_text = buttons_text.strip()
             ),
             reply_markup = InlineKeyboardMarkup([
                 [InlineKeyboardButton(f'Pʀᴏᴛᴇᴄᴛ Cᴏɴᴛᴇɴᴛ: {pcd}', callback_data='pc'), InlineKeyboardButton(f'Hɪᴅᴇ Cᴀᴘᴛɪᴏɴ: {hcd}', callback_data='hc')],
