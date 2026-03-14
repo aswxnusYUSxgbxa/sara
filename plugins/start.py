@@ -237,32 +237,31 @@ async def start_command(client: Client, message: Message):
     referral_link = f"https://telegram.dog/{client.username}?start=ref_{user_id}"
 
     # Send Welcome with keyboard
-    try:
-        await message.reply_photo(
-            photo=START_PIC,
-            caption=START_MSG.format(
-                first=message.from_user.first_name or "",
-                last=message.from_user.last_name or "",
-                username=None if not message.from_user.username else "@" + message.from_user.username,
-                mention=message.from_user.mention,
-                id=message.from_user.id,
-            )
-            + f"\n\n🎁 <b>Referral System:</b>\n"
-            + f"🔗 Your Link: <code>{referral_link}</code>\n"
-            + f"📊 Refer {REFERRAL_COUNT} users = {REFERRAL_PREMIUM_DAYS} Days Premium!",
-            reply_markup=reply_kb
+    start_text = (
+        START_MSG.format(
+            first=message.from_user.first_name or "",
+            last=message.from_user.last_name or "",
+            username=None if not message.from_user.username else "@" + message.from_user.username,
+            mention=message.from_user.mention,
+            id=message.from_user.id,
         )
-    except:
-        await message.reply(
-            START_MSG.format(
-                first=message.from_user.first_name or "",
-                last=message.from_user.last_name or "",
-                username=None if not message.from_user.username else "@" + message.from_user.username,
-                mention=message.from_user.mention,
-                id=message.from_user.id,
-            ),
-            reply_markup=reply_kb
-        )
+        + f"\n\n🎁 <b>Referral System:</b>\n"
+        + f"🔗 Your Link: <code>{referral_link}</code>\n"
+        + f"📊 Refer {REFERRAL_COUNT} users = {REFERRAL_PREMIUM_DAYS} Days Premium!"
+    )
+    await message.reply_text(
+        text=start_text,
+        reply_markup=reply_kb
+    )
+
+    # Send separate message for the inline share button
+    share_button = InlineKeyboardMarkup([
+        [InlineKeyboardButton("📤 Share Link", url=f"https://t.me/share/url?url={referral_link}&text=Join%20this%20amazing%20bot!")]
+    ])
+    await message.reply_text(
+        text="👇 **Click below to quickly share your referral link with friends!**",
+        reply_markup=share_button
+    )
 
 
 
