@@ -249,18 +249,19 @@ async def start_command(client: Client, message: Message):
         + f"🔗 Your Link: <code>{referral_link}</code>\n"
         + f"📊 Refer {REFERRAL_COUNT} users = {REFERRAL_PREMIUM_DAYS} Days Premium!"
     )
-    await message.reply_text(
-        text=start_text,
-        reply_markup=reply_kb
-    )
-
-    # Send separate message for the inline share button
     share_button = InlineKeyboardMarkup([
         [InlineKeyboardButton("📤 Share Link", url=f"https://t.me/share/url?url={referral_link}&text=Join%20this%20amazing%20bot!")]
     ])
+
     await message.reply_text(
-        text="👇 **Click below to quickly share your referral link with friends!**",
+        text=start_text,
         reply_markup=share_button
+    )
+
+    # Send a tiny separate message strictly to load the custom bottom menu keyboard
+    await message.reply_text(
+        text="👇 **Use the menu below to navigate:**",
+        reply_markup=reply_kb
     )
 
 
