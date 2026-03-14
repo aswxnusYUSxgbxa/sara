@@ -1694,13 +1694,6 @@ async def not_joined(client: Client, message: Message):
 
         # Add a refresh/joined button
         try:
-            # We can use the start callback data to just refresh the current status.
-            # But the easiest way is to let them use the "Refresh" or just provide a simple refresh link.
-            # actually we can just pass the original command or simply a general reload.
-            # Usually bots provide a callback to re-trigger start or simply ask user to click a refresh button
-            # In this bot, 'close' will delete the message, and they can send /start.
-            # Let's add an "I've Joined ✅" button that points to the deep link or just triggers a callback
-            # We'll use a deep link to start, which forces a re-evaluation
             bot_username = client.username
             buttons.append([
                 InlineKeyboardButton(text="I've Joined ✅", url=f"https://t.me/{bot_username}?start=True")

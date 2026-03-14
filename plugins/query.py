@@ -167,34 +167,163 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         )
 
     elif data == "buy_prem":
-        # Delete the current message and send a new one with the photo
+        # First screen: Ask user to select a plan
+        buttons = [
+            [InlineKeyboardButton(f"1 Month ({PRICE2})", callback_data="pay_30")],
+            [InlineKeyboardButton(f"3 Months ({PRICE3})", callback_data="pay_90")],
+            [InlineKeyboardButton(f"6 Months ({PRICE4})", callback_data="pay_180")],
+            [InlineKeyboardButton(f"1 Year ({PRICE5})", callback_data="pay_365")],
+            [InlineKeyboardButton("🔒 Close", callback_data="close")]
+        ]
+
+        await query.message.edit_text(
+            text=(
+                f"👋 <b>{query.from_user.username}</b>\n\n"
+                f"🎖️ <b>Available Plans:</b>\n\n"
+                f"● {PRICE2} - 1 Month Prime Membership\n"
+                f"● {PRICE3} - 3 Months Prime Membership\n"
+                f"● {PRICE4} - 6 Months Prime Membership\n"
+                f"● {PRICE5} - 1 Year Prime Membership\n\n"
+                f"<b>Please select a plan below to view payment details:</b>"
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+    elif data.startswith("pay_"):
+        days = int(data.split("_")[1])
+
+        # Determine the price based on days
+        price = "Unknown"
+        if days == 30: price = PRICE2
+        elif days == 90: price = PRICE3
+        elif days == 180: price = PRICE4
+        elif days == 365: price = PRICE5
+
         await query.message.delete()
         await client.send_photo(
             chat_id=query.message.chat.id,
             photo=QR_PIC,
             caption=(
-                f"👋 {query.from_user.username}\n\n"
-                f"🎖️ Available Plans :\n\n"
-                f"● {PRICE1}  For 0 Days Prime Membership\n\n"
-                f"● {PRICE2}  For 1 Month Prime Membership\n\n"
-                f"● {PRICE3}  For 3 Months Prime Membership\n\n"
-                f"● {PRICE4}  For 6 Months Prime Membership\n\n"
-                f"● {PRICE5}  For 1 Year Prime Membership\n\n\n"
-                f"💵 ASK UPI ID TO ADMIN AND PAY THERE -  <code>{UPI_ID}</code>\n\n\n"
-                f"♻️ After Payment You Will Get Instant Membership \n\n\n"
-                f"‼️ Must Send Screenshot after payment & If anyone want custom time membrship then ask admin"
+                f"<b>You selected the {days} Days Premium Plan ({price})</b>\n\n"
+                f"💵 <b>UPI ID:</b> <code>{UPI_ID}</code>\n\n"
+                f"<b>Instructions:</b>\n"
+                f"1. Pay the exact amount ({price}) to the UPI ID or QR Code above.\n"
+                f"2. After payment is successful, click the <b>Payment Done ✅</b> button below.\n"
+                f"3. You will be asked to submit a screenshot of your transaction.\n\n"
+                f"<i>Your subscription will be activated automatically once an admin approves it.</i>"
             ),
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [
-                        InlineKeyboardButton(
-                            "ADMIN 24/7", url=(SCREENSHOT_URL)
-                        )
-                    ],
+                    [InlineKeyboardButton("Payment Done ✅", callback_data=f"paid_{days}")],
+                    [InlineKeyboardButton("⬅️ Back to Plans", callback_data="buy_prem")],
                     [InlineKeyboardButton("🔒 Close", callback_data="close")],
                 ]
             )
         )
+
+    elif data.startswith("paid_"):
+        days = int(data.split("_")[1])
+        user_id = query.from_user.id
+
+        # Ask user for screenshot
+        prompt_msg = await client.ask(
+            chat_id=user_id,
+            text=(
+                f"📸 <b>Please send a clear screenshot of your payment.</b>\n\n"
+                f"<i>Make sure the Transaction ID / UTR is visible. Send the image now (you have 2 minutes).</i>\n\n"
+                f"Type /cancel to abort."
+            ),
+            timeout=120
+        )
+
+        if prompt_msg.text and prompt_msg.text.lower() == '/cancel':
+            return await prompt_msg.reply("❌ Payment verification cancelled.")
+
+        if not prompt_msg.photo:
+            return await prompt_msg.reply("❌ You did not send a valid photo. Payment verification cancelled. Please try again.")
+
+        # Send wait message
+        await prompt_msg.reply(
+            "⏳ <b>Thank you! Your payment screenshot has been sent to the admins.</b>\n\n"
+            "<i>Please wait. Your subscription will be activated once they verify the payment.</i>"
+        )
+
+        # Forward screenshot to admin (OWNER_ID)
+        admin_markup = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("Approve ✅", callback_data=f"approve_pay_{user_id}_{days}"),
+                InlineKeyboardButton("Decline ❌", callback_data=f"decline_pay_{user_id}")
+            ]
+        ])
+
+        await client.send_photo(
+            chat_id=OWNER_ID,
+            photo=prompt_msg.photo.file_id,
+            caption=(
+                f"💰 <b>New Payment Verification Request</b>\n\n"
+                f"👤 <b>User:</b> {query.from_user.mention} (<code>{user_id}</code>)\n"
+                f"📅 <b>Plan Requested:</b> {days} Days\n\n"
+                f"<i>Please review the screenshot and approve or decline the payment.</i>"
+            ),
+            reply_markup=admin_markup
+        )
+
+    elif data.startswith("approve_pay_"):
+        if query.from_user.id != OWNER_ID:
+            return await query.answer("❌ You are not authorized to do this.", show_alert=True)
+
+        parts = data.split("_")
+        target_user_id = int(parts[2])
+        days = int(parts[3])
+
+        from database.db_premium import add_premium
+        await add_premium(target_user_id, days, "d")
+
+        # Update admin message
+        await query.message.edit_caption(
+            caption=(
+                f"{query.message.caption}\n\n"
+                f"✅ <b>Status:</b> Approved by {query.from_user.mention}"
+            ),
+            reply_markup=None
+        )
+
+        # Notify user
+        try:
+            await client.send_message(
+                chat_id=target_user_id,
+                text=f"🎉 <b>Congratulations!</b>\n\nYour payment has been verified. You have received {days} days of Premium Membership!"
+            )
+        except:
+            pass
+
+    elif data.startswith("decline_pay_"):
+        if query.from_user.id != OWNER_ID:
+            return await query.answer("❌ You are not authorized to do this.", show_alert=True)
+
+        target_user_id = int(data.split("_")[2])
+
+        # Update admin message
+        await query.message.edit_caption(
+            caption=(
+                f"{query.message.caption}\n\n"
+                f"❌ <b>Status:</b> Declined by {query.from_user.mention}"
+            ),
+            reply_markup=None
+        )
+
+        # Notify user
+        try:
+            await client.send_message(
+                chat_id=target_user_id,
+                text=(
+                    f"❌ <b>Payment Verification Failed</b>\n\n"
+                    f"We couldn't verify your payment. Please make sure you send a proper screenshot with the payment ID / UTR clearly visible.\n\n"
+                    f"Thank you!"
+                )
+            )
+        except:
+            pass
 
     elif data == "setting":
         await query.edit_message_media(InputMediaPhoto(random.choice(PICS), "<b>Please wait !\n\n<i>🔄 Retrieving all Settings...</i></b>"))
