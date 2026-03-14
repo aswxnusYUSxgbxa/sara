@@ -2343,7 +2343,7 @@ async def store_videos_dynamic(app: Client):
         if not last_msgs:
             logging.info("No messages found in channel when storing videos (dynamic).")
             return
-        last_id = last_msgs[0].message_id
+        last_id = getattr(last_msgs[0], 'id', getattr(last_msgs[0], 'message_id', 0))
     except Exception as e:
         logging.error(f"Error fetching channel last message id: {e}")
         return
@@ -2381,7 +2381,7 @@ async def store_photos_dynamic(app: Client):
         if not last_msgs:
             logging.info("No messages found in channel when storing photos (dynamic).")
             return
-        last_id = last_msgs[0].message_id
+        last_id = getattr(last_msgs[0], 'id', getattr(last_msgs[0], 'message_id', 0))
     except Exception as e:
         logging.error(f"Error fetching channel last message id: {e}")
         return
