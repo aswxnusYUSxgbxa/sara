@@ -385,8 +385,8 @@ class Rohit:
     async def get_channel_button(self):
         data = await self.channel_button_data.find_one({})
         if data:
-            return data.get('value', False)
-        return False
+            return data.get('value', True)
+        return True
 
     async def get_request_forcesub(self):
         data = await self.rqst_fsub_data.find_one({})
@@ -473,6 +473,12 @@ class Rohit:
         {'$set': {'fsub_mode': fsub_mode}},
         upsert=True
     )
+
+    async def get_request_forcesub_channel(self, channel_id: int):
+        data = await self.rqst_fsub_Channel_data.find_one({"_id": channel_id})
+        if data:
+            return data.get("fsub_mode", False)
+        return False
 
     # Method 1: Add user to the channel set
     async def reqSent_user(self, channel_id: int, user_id: int):

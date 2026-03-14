@@ -106,3 +106,421 @@ TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
 [13-Mar-26 21:06:35 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
 [13-Mar-26 21:06:35 - INFO] - __main__ - Bot Username: @whapiybbot
 [13-Mar-26 21:06:35 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[13-Mar-26 21:14:20 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:14:31 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:14:42 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:14:43 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:14:53 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:04 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:15 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:16 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:15:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:37 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:48 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:15:49 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:15:59 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:10 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:21 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:22 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:16:32 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:43 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:54 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:16:55 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:17:05 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:17:16 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:17:27 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:17:28 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:17:38 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:17:49 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:00 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:01 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:18:11 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:33 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:34 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:18:44 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:18:55 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:19:06 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:19:07 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:19:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:19:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:19:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:19:40 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:19:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:01 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:12 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:13 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:20:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:45 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:20:46 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:20:56 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:07 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:18 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:19 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:21:29 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:40 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:51 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:21:52 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:22:02 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:13 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:24 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:25 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:22:35 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:46 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:57 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:22:58 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:22:58 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:22:59 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:00 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:01 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:23:01 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:02 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:03 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:04 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:23:04 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:05 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:06 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:07 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:23:07 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:08 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:09 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:10 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:23:10 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:11 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[13-Mar-26 21:23:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:23:23 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:23:33 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:23:44 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:23:55 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:23:56 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:24:06 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:24:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:24:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:24:29 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:24:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:24:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:25:01 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:25:02 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:25:12 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:25:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:25:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:25:35 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:25:55 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:06 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:18 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:26:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[13-Mar-26 21:26:51 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[13-Mar-26 21:27:02 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 05:10:59 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 05:10:59 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 05:11:00 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 05:11:50 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 06:02:54 - INFO] - __main__ - Shutting down...
+[14-Mar-26 06:03:05 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 06:03:05 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 06:03:06 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 06:58:51 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 06:59:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 06:59:37 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:00:04 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:00:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:00:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:00:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:00:51 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 07:02:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:02:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:02:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:02:40 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 07:04:44 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:06:12 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:06:48 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:06:59 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:07:10 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:07:11 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 07:07:21 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:07:32 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:07:43 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:07:44 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 07:11:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:11:37 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:11:48 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:11:49 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 07:12:19 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:12:58 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:13:43 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 07:17:49 - INFO] - __main__ - Shutting down...
+[14-Mar-26 07:17:59 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 07:17:59 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 07:18:00 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 07:19:56 - ERROR] - root - Error storing channel media: 'Photo' object is not subscriptable
+[14-Mar-26 07:20:05 - ERROR] - root - Error storing channel media: 'Message' object has no attribute 'message_id'
+[14-Mar-26 08:12:18 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 08:12:48 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:02:37 - INFO] - __main__ - Shutting down...
+[14-Mar-26 09:02:47 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 09:02:47 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 09:02:47 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 09:04:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:18 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:19 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:20 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:20 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:21 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:23 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:24 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:25 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:26 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:27 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:29 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:29 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:30 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:31 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:32 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:32 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:33 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:35 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:35 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:36 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:37 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:38 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:38 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:40 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:41 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:41 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:42 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:43 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:44 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:44 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:45 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:46 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:47 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:47 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:48 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:49 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:50 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:51 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:52 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:53 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:53 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:54 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:55 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:56 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:56 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:57 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:58 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:04:59 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:04:59 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:00 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:01 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:02 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:02 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:03 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:04 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:05 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:05 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:06 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:07 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:08 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:08 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:09 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:10 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:11 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:11 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:12 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:13 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:14 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:14 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:15 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:16 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:17 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:18 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:19 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:20 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:20 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:21 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:23 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:24 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:25 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:26 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:27 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:29 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:29 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:30 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:31 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:32 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:05:32 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:33 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 09:05:34 - INFO] - __main__ - Shutting down...
+[14-Mar-26 09:05:51 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 09:05:51 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 09:05:51 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 09:06:53 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 09:07:20 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 09:08:52 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 09:35:51 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:36:09 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:36:27 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:37:10 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:39:25 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:39:36 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:40:17 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:40:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:40:39 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:40:40 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:40:50 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:41:01 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:41:12 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:41:13 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 09:41:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:41:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 09:41:44 - INFO] - __main__ - Shutting down...
+[14-Mar-26 12:13:21 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 12:13:21 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 12:13:21 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 12:13:46 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 12:14:47 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 12:47:21 - INFO] - __main__ - Shutting down...
+[14-Mar-26 12:47:31 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 12:47:31 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 12:47:32 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 12:48:40 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 12:48:56 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 12:49:03 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 14:17:47 - INFO] - __main__ - Shutting down...
+[14-Mar-26 14:17:57 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 14:17:57 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 14:17:57 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 14:18:10 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:18:11 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:23:13 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 14:24:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 14:25:25 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 14:39:10 - INFO] - __main__ - Shutting down...
+[14-Mar-26 14:39:21 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 14:39:21 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 14:39:21 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 14:39:40 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:39:50 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:39:59 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:47:09 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: Connection timed out
+[14-Mar-26 14:47:14 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 14:53:19 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 113] Connect call failed ('91.108.56.130', 443)
+[14-Mar-26 14:53:22 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 113] Connect call failed ('91.108.56.130', 443)
+[14-Mar-26 14:53:23 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:24 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:24 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:25 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:26 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:27 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:27 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:28 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:29 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:30 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:30 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:31 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:32 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:33 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:33 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:34 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:35 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:36 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:36 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:37 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:38 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 101] Network is unreachable
+[14-Mar-26 14:53:39 - WARNING] - pyrogram.connection.connection - Connection failed! Trying again...
+[14-Mar-26 14:53:42 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 113] Connect call failed ('91.108.56.130', 443)
+[14-Mar-26 14:53:45 - WARNING] - pyrogram.connection.connection - Unable to connect due to network issues: [Errno 113] Connect call failed ('91.108.56.130', 443)
+[14-Mar-26 15:31:12 - INFO] - __main__ - Shutting down...
+[14-Mar-26 15:31:21 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 15:31:21 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 15:31:22 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 15:32:38 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 15:36:34 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 15:38:20 - INFO] - __main__ - Shutting down...
+[14-Mar-26 15:38:31 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 15:38:31 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 15:38:32 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 15:38:38 - ERROR] - pyrogram.dispatcher - Telegram says: [400 MESSAGE_NOT_MODIFIED] (caused by "messages.EditMessage") Pyrogram 2.3.50 thinks: The message was not modified because you tried to edit it using the same content
+Traceback (most recent call last):
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/dispatcher.py", line 363, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/handlers/callback_query_handler.py", line 207, in resolve_future_or_callback
+    await self.original_callback(client, query, *args)
+  File "/home/aswin/repo/sara/plugins/query.py", line 283, in cb_handler
+    await query.message.edit_caption(
+    ...<5 lines>...
+    )
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/types/messages_and_media/message.py", line 4396, in edit_caption
+    return await self._client.edit_message_caption(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/methods/messages/edit_message_caption.py", line 80, in edit_message_caption
+    return await self.edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/methods/messages/edit_message_text.py", line 109, in edit_message_text
+    r = await self.invoke(rpc)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/methods/advanced/invoke.py", line 80, in invoke
+    r = await self.session.invoke(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/session/session.py", line 420, in invoke
+    return await self.send(query, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/session/session.py", line 377, in send
+    RPCError.raise_it(result, type(data))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/aswin/aswn/lib/python3.13/site-packages/pyrogram/errors/rpc_error.py", line 93, in raise_it
+    raise getattr(
+    ...<5 lines>...
+      is_signed=is_signed)
+pyrogram.errors.exceptions.bad_request_400.MessageNotModified: Telegram says: [400 MESSAGE_NOT_MODIFIED] (caused by "messages.EditMessage") Pyrogram 2.3.50 thinks: The message was not modified because you tried to edit it using the same content
+[14-Mar-26 15:38:49 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 15:39:02 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 15:39:14 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 15:39:15 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 15:39:28 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 15:41:29 - ERROR] - root - Error storing channel media: 'Photo' object is not subscriptable
+[14-Mar-26 15:41:38 - ERROR] - root - Error storing channel media: 'Message' object has no attribute 'message_id'
+[14-Mar-26 15:41:39 - ERROR] - root - Error storing channel media: 'Message' object has no attribute 'message_id'
+[14-Mar-26 16:14:06 - INFO] - __main__ - Shutting down...
+[14-Mar-26 16:16:22 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 16:16:22 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 16:16:22 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 16:16:24 - INFO] - root - Received /start command from user ID: 1137799257
+[14-Mar-26 16:16:51 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 16:17:31 - INFO] - root - Received /start command from user ID: 5815218439
+[14-Mar-26 16:17:53 - INFO] - root - Received /start command from user ID: 5815218439
+[14-Mar-26 16:35:51 - INFO] - __main__ - Shutting down...
+[14-Mar-26 16:36:03 - INFO] - __main__ - Bot Running..! Made by @rohit_1888
+[14-Mar-26 16:36:03 - INFO] - __main__ - Bot Username: @whapiybbot
+[14-Mar-26 16:36:03 - INFO] - __main__ - Bot is now running. Thanks to @rohit_1888
+[14-Mar-26 16:38:05 - INFO] - root - Received /start command from user ID: 6765202867
+[14-Mar-26 16:38:25 - INFO] - root - Inserted document/animation CgACAgEAAyEFAASSUsBwAAIEgWm1gO8Y8PMlDDS-RCLjs2pX7Ra_AAJzAQAC5AeZR2p1h6Ko23SeHgQ from channel -1002454896752
+[14-Mar-26 16:38:29 - INFO] - root - Inserted photo AgACAgUAAyEFAASSUsBwAAIEgmm1gPMbbrU7UqgqEdnVS-uFVJUAA44Oaxsp17FVXuhUk8_yJ6cACAEAAwIAA3cABx4E from channel -1002454896752
+[14-Mar-26 16:38:50 - INFO] - root - Inserted video BAACAgUAAyEFAASSUsBwAAIEg2m1gQmZUGKvNmzn1-WTrE95GzIiAAInEAACFlTYV6400epFS3vgHgQ from channel -1002454896752
+[14-Mar-26 16:39:57 - INFO] - __main__ - Shutting down...

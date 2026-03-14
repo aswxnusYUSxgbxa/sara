@@ -1,4 +1,4 @@
-# Don't remove This Line From Here. Tg: @rohit_1888 | @Codeflix_Bots
+
 import os
 import sys
 import time
@@ -35,7 +35,7 @@ async def update_bot(client, message):
     try:
         msg = await message.reply_text("<b><blockquote>Pulling the latest updates and restarting the bot...</blockquote></b>")
 
-        # Run git pull
+        
         git_pull = subprocess.run(["git", "pull"], capture_output=True, text=True)
 
         if git_pull.returncode == 0:
@@ -46,7 +46,7 @@ async def update_bot(client, message):
 
         await asyncio.sleep(3)
 
-        await msg.edit_text("<b><blockquote>✅ Bᴏᴛ ɪs ʀᴇsᴛᴀʀᴛɪɴɢ ɴᴏᴡ...</blockquote></b>")
+        await msg.edit_text("<b><blockquote>✅ Bot is restarting now...</blockquote></b>")
 
     except Exception as e:
         await message.reply_text(f"An error occurred: {e}")
@@ -60,7 +60,7 @@ async def update_bot(client, message):
     'start', 'users', 'broadcast', 'stats', 'addpaid', 'removepaid', 'listpaid',
     'help', 'add_fsub', 'fsub_chnl', 'restart', 'del_fsub', 'add_admins', 'del_admins', 
     'admin_list', 'cancel', 'auto_del', 'forcesub', 'fsub', 'config', 'settings', 'files', 'add_banuser', 'token', 'del_banuser', 'banuser_list', 
-    'status', 'req_fsub', 'myplan', 'short', 'check', 'free', 'set_free_limit', 'update', 'status', 'genlink', 'batch', 'custom_batch', 'referral'])# ✅ ADD EXCEPTION FOR BUTTON TEXTS
+    'status', 'req_fsub', 'myplan', 'short', 'check', 'free', 'set_free_limit', 'update', 'status', 'genlink', 'batch', 'custom_batch', 'referral'])
     & ~filters.regex("^Get Video 🍒$")
     & ~filters.regex("^Get Photo 📸$")
     & ~filters.regex("^Get Batch 📦$")
@@ -69,11 +69,11 @@ async def update_bot(client, message):
 async def handle_message(client: Client, message: Message):
     user_id = message.from_user.id
 
-    # Check if user is admin - admins can send any message
+    
     if await db.admin_exist(user_id) or user_id == OWNER_ID:
-        return  # Allow admins to send any message
+        return  
 
-    # For non-admin users, reply with configured message
+    
     await message.reply_text(
         USER_REPLY_TEXT,
         protect_content=False,

@@ -1,4 +1,4 @@
-#(©)Codeflix_Bots
+
 import binascii
 import base64
 import re
@@ -17,21 +17,21 @@ from config import OWNER_ID
 import random
 import string
 from datetime import datetime, timedelta
-from database.database import db  # Ensure this is the correct import for your database instance
-#=============================================================================================================================================================================
-# -------------------- HELPER FUNCTIONS FOR USER VERIFICATION IN DIFFERENT CASES -------------------- 
-#=============================================================================================================================================================================
-# used for checking banned user
+from database.database import db  
+
+
+
+
 async def check_banUser(filter, client, update):
     try:
         user_id = update.from_user.id
         return await db.ban_user_exist(user_id)
-    except: #Exception as e:
-        #print(f"!Error on check_banUser(): {e}")
+    except: 
+        
         return False
 
 
-#used for cheking if a user is admin ~Owner also treated as admin level
+
 async def check_admin(filter, client, update):
     try:
         user_id = update.from_user.id       
@@ -41,15 +41,15 @@ async def check_admin(filter, client, update):
         return False
 
 
-# Check user subscription in Channels in a more optimized way
+
 async def is_subscribed(client, update):
-    if not update or not update.from_user:  # Prevents NoneType errors
-        print("Error: update or update.from_user is None")  # Debugging
+    if not update or not update.from_user:  
+        print("Error: update or update.from_user is None")  
         return False
 
-    Channel_ids = await db.get_all_channels() or []  # Ensure it's always a list
+    Channel_ids = await db.get_all_channels() or []  
 
-    if not Channel_ids:  # If empty, no need to check subscription
+    if not Channel_ids:  
         return True
 
     user_id = update.from_user.id
@@ -65,23 +65,23 @@ async def is_subscribed(client, update):
 
     return all(results)
 
-#Chcek user subscription by specifying channel id and user id
+
 async def is_userJoin(client, user_id, channel_id):
-    #REQFSUB = await db.get_request_forcesub()
+    
     try:
         member = await client.get_chat_member(chat_id=channel_id, user_id=user_id)
         return member.status in {ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER}
 
     except UserNotParticipant:
-        if await db.get_request_forcesub(): #and await privateChannel(client, channel_id):
-                return await db.reqSent_user_exist(channel_id, user_id)
+        if await db.get_request_forcesub() or await db.get_request_forcesub_channel(channel_id):
+            return await db.reqSent_user_exist(channel_id, user_id)
 
         return False
 
     except Exception as e:
         print(f"!Error on is_userJoin(): {e}")
         return False
-#=============================================================================================================================================================================
+
 
 
 async def get_messages(client, message_ids):
@@ -143,21 +143,21 @@ async def get_verify_status(user_id):
     return await db.get_verify_status(user_id)
 
 async def get_shortlink(link):
-    # Fetch shortener details from the database
+    
     shortener_url = await db.get_shortener_url()
     shortener_api = await db.get_shortener_api()
 
-    # Validate shortener details
+    
     if not shortener_url or not shortener_api:
         logging.error("Shortener URL or API key is missing.")
         raise ValueError("Shortener details are not configured.")
 
-    # Log the shortener URL and long URL for debugging
+    
     logging.info(f"Using shortener URL: {shortener_url}")
     logging.info(f"Original Link: {link}")
 
     try:
-        # Initialize Shortzy without altering the shortener_url
+        
         shortzy = Shortzy(api_key=shortener_api, base_site=shortener_url)
         short_link = await shortzy.convert(link)
         return short_link
@@ -183,7 +183,7 @@ async def encode(string):
     return base64_string
 
 async def decode(base64_string):
-    base64_string = base64_string.strip("=") # links generated before this commit will be having = sign, hence striping them to handle padding errors.
+    base64_string = base64_string.strip("=") 
     base64_bytes = (base64_string + "=" * (-len(base64_string) % 4)).encode("ascii")
     string_bytes = base64.urlsafe_b64decode(base64_bytes) 
     string = string_bytes.decode("ascii")
@@ -210,8 +210,8 @@ def get_readable_time(seconds: int) -> str:
     up_time += ":".join(time_list)
     return up_time
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Check user subscription in Channels
+
+
 """async def is_subscribed(filter, client, update):
     Channel_ids = await db.get_all_channels()
     
@@ -251,7 +251,7 @@ def get_readable_time(seconds: int) -> str:
 
     return True"""
 
-#Check user subscription in Channels in More Simpler way
+
 """async def is_subscribed(filter, client, update):
     Channel_ids = await db.get_all_channels()
     
@@ -271,7 +271,7 @@ def get_readable_time(seconds: int) -> str:
             return False
             
     return True"""
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 subscribed = filters.create(is_subscribed)

@@ -1,4 +1,4 @@
-#made by @rohit_1888
+
 
 from bot import Bot
 import asyncio
@@ -135,7 +135,7 @@ async def get_forcesub(client: Client, message: Message):
     await pro.edit(f"<b>⚡ Force-sub channel list:</b>\n\n{channel_list}", reply_markup=reply_markup, disable_web_page_preview=True)
 
 
-# Commands for adding admins by owner
+
 @Bot.on_message(filters.command('add_admins') & filters.private & filters.user(OWNER_ID))
 async def add_admins(client: Client, message: Message):
     pro = await message.reply("<b><i>Processing....</i></b>", quote=True)
@@ -233,34 +233,34 @@ async def get_admins(client: Client, message: Message):
 
 
 
-#Commands for banned user function............
+
 @Bot.on_message(filters.command('add_banuser') & filters.private & is_admin)
 async def add_banuser(client:Client, message:Message):        
-    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
+    pro = await message.reply("<b><i>Processing....</i></b>", quote=True)
     check, autho_users = 0, []
     banuser_ids = await db.get_ban_users()
     autho_users = await db.get_all_admins(); autho_users.append(OWNER_ID)
     banusers = message.text.split()[1:]
 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
 
     if not banusers:
-        return await pro.edit("<b>Yᴏᴜ ɴᴇᴇᴅ ᴛᴏ ᴀᴅᴅ Bᴀɴɴᴇᴅ Usᴇʀ ɪᴅs\n<blockquote><u>EXAMPLE</u> :\n/add_banuser [user_id] :</b> ʏᴏᴜ ᴄᴀɴ ᴀᴅᴅ ᴏɴᴇ ᴏʀ ᴍᴜʟᴛɪᴘʟᴇ ᴜsᴇʀ ɪᴅ ᴀᴛ ᴀ ᴛɪᴍᴇ.</blockquote>", reply_markup=reply_markup)
+        return await pro.edit("<b>You need to add Banned User ids\n<blockquote><u>EXAMPLE</u> :\n/add_banuser [user_id] :</b> you can add one or multiple user id at a time.</blockquote>", reply_markup=reply_markup)
 
     banuser_list = ""
     for id in banusers:
         try:
             id = int(id)
         except:
-            banuser_list += f"<blockquote><b>ɪɴᴠᴀʟɪᴅ ɪᴅ: <code>{id}</code></b></blockquote>\n"
+            banuser_list += f"<blockquote><b>invalid id: <code>{id}</code></b></blockquote>\n"
             continue
 
         if id in autho_users:
-            banuser_list += f"<blockquote><b>ɪᴅ: <code>{id}</code>, ᴄᴏᴜʟᴅ ʙᴇ ᴀᴅᴍɪɴ ᴏʀ ᴏᴡɴᴇʀ</b></blockquote>\n"
+            banuser_list += f"<blockquote><b>id: <code>{id}</code>, could be admin or owner</b></blockquote>\n"
             continue
 
         if id in banuser_ids:
-            banuser_list += f"<blockquote><b>ɪᴅ: <code>{id}</code>, ᴀʟʀᴇᴀᴅʏ ᴇxɪsᴛ..</b></blockquote>\n"
+            banuser_list += f"<blockquote><b>id: <code>{id}</code>, already exist..</b></blockquote>\n"
             continue
 
         id = str(id)  
@@ -268,38 +268,38 @@ async def add_banuser(client:Client, message:Message):
             banuser_list += f"<b><blockquote>(ID: <code>{id}</code>)</blockquote></b>\n"
             check += 1
         else:
-            banuser_list += f"<blockquote><b>ɪɴᴠᴀʟɪᴅ ɪᴅ: <code>{id}</code></b></blockquote>\n"
+            banuser_list += f"<blockquote><b>invalid id: <code>{id}</code></b></blockquote>\n"
             continue            
 
     if check == len(banusers):
         for id in banusers:
             await db.add_ban_user(int(id))
-        await pro.edit(f'<b>Nᴇᴡ ɪᴅs Aᴅᴅᴇᴅ ɪɴ Bᴀɴɴᴇᴅ Usᴇʀ Lɪsᴛ ✅</b>\n\n{banuser_list}', reply_markup=reply_markup)
+        await pro.edit(f'<b>New ids Added in Banned User List ✅</b>\n\n{banuser_list}', reply_markup=reply_markup)
 
     else:
-        await pro.edit(f'<b>❌ Eʀʀᴏʀ oᴄᴄᴜʀᴇᴅ ᴡʜɪʟᴇ Aᴅᴅɪɴɢ Bᴀɴɴᴇᴅ Usᴇʀs</b>\n\n{banuser_list.strip()}\n\n<b><i>Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ...</i></b>', reply_markup=reply_markup)
-    #await update_fsub(1)
+        await pro.edit(f'<b>❌ Error occured while Adding Banned Users</b>\n\n{banuser_list.strip()}\n\n<b><i>Please try again...</i></b>', reply_markup=reply_markup)
+    
 
 
 @Bot.on_message(filters.command('del_banuser') & filters.private & is_admin)
 async def delete_banuser(client:Client, message:Message):        
-    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
+    pro = await message.reply("<b><i>Processing....</i></b>", quote=True)
     banuser_ids = await db.get_ban_users()
     banusers = message.text.split()[1:]
 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
 
     if not banusers:
-        return await pro.edit("<b>⁉️ Pʟᴇᴀsᴇ, Pʀᴏᴠɪᴅᴇ ᴠᴀʟɪᴅ ɪᴅs ᴏʀ ᴀʀɢᴜᴍᴇɴᴛs</b>\n<blockquote><b><u>EXAMPLES:</u>\n/del_banuser [user_ids] :</b> ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴏɴᴇ ᴏʀ ᴍᴜʟᴛɪᴘʟᴇ sᴘᴇᴄɪғɪᴇᴅ ɪᴅs\n<code>/del_banuser all</code> : ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴜsᴇʀ ɪᴅs</blockquote>", reply_markup=reply_markup)
+        return await pro.edit("<b>⁉️ Please, Provide valid ids or arguments</b>\n<blockquote><b><u>EXAMPLES:</u>\n/del_banuser [user_ids] :</b> to delete one or multiple specified ids\n<code>/del_banuser all</code> : to delete all available user ids</blockquote>", reply_markup=reply_markup)
 
     if len(banusers) == 1 and banusers[0].lower() == "all":
         if banuser_ids:
             for id in banuser_ids:
                 await db.del_ban_user(id)
             ids = "\n".join(f"<blockquote><code>{user}</code> ✅</blockquote>" for user in banuser_ids)
-            return await pro.edit(f"<b>⛔️ Aʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ Bᴀɴɴᴇᴅ Usᴇʀ ɪᴅ ᴀʀᴇ Dᴇʟᴇᴛᴇᴅ :\n{ids}</b>", reply_markup=reply_markup)
+            return await pro.edit(f"<b>⛔️ All available Banned User id are Deleted :\n{ids}</b>", reply_markup=reply_markup)
         else:
-            return await pro.edit("<b><blockquote>⁉️ Nᴏ Bᴀɴɴᴇᴅ Usᴇʀ ɪᴅ Lɪsᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛᴏ Dᴇʟᴇᴛᴇ</blockquote></b>", reply_markup=reply_markup)
+            return await pro.edit("<b><blockquote>⁉️ No Banned User id List available to Delete</blockquote></b>", reply_markup=reply_markup)
 
     if len(banuser_ids) >= 1:
         passed = ''
@@ -307,27 +307,27 @@ async def delete_banuser(client:Client, message:Message):
             try:
                 id = int(ban_id)
             except:
-                passed += f"<blockquote><b>ɪɴᴠᴀʟɪᴅ ɪᴅ: <code>{ban_id}</code></b></blockquote>\n"
+                passed += f"<blockquote><b>invalid id: <code>{ban_id}</code></b></blockquote>\n"
                 continue
 
             if id in banuser_ids:
                 await db.del_ban_user(id)
                 passed += f"<blockquote><code>{id}</code> ✅</blockquote>\n"
             else:
-                passed += f"<blockquote><b><code>{id}</code> ɴᴏᴛ ɪɴ ʙᴀɴɴᴇᴅ ʟɪsᴛ</b></blockquote>\n"
+                passed += f"<blockquote><b><code>{id}</code> not in banned list</b></blockquote>\n"
 
-        await pro.edit(f"<b>⛔️ Pʀᴏᴠɪᴅᴇᴅ Bᴀɴɴᴇᴅ Usᴇʀ ɪᴅ ᴀʀᴇ Dᴇʟᴇᴛᴇᴅ :</u>\n\n{passed}</b>", reply_markup=reply_markup)
+        await pro.edit(f"<b>⛔️ Provided Banned User id are Deleted :</u>\n\n{passed}</b>", reply_markup=reply_markup)
 
     else:
-        await pro.edit("<b><blockquote>⁉️ Nᴏ Bᴀɴɴᴇᴅ Usᴇʀ ɪᴅ Lɪsᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛᴏ Dᴇʟᴇᴛᴇ</blockquote></b>", reply_markup=reply_markup)
+        await pro.edit("<b><blockquote>⁉️ No Banned User id List available to Delete</blockquote></b>", reply_markup=reply_markup)
 
 
 @Bot.on_message(filters.command('banuser_list') & filters.private & is_admin)
 async def get_banuser_list(client:Client, message: Message):        
-    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
+    pro = await message.reply("<b><i>Processing....</i></b>", quote=True)
 
     banuser_ids = await db.get_ban_users()
-    banuser_list = "<b><blockquote>❌ Nᴏ Bᴀɴɴᴇᴅ Usᴇʀ Lɪsᴛ Fᴏᴜɴᴅ !</blockquote></b>"
+    banuser_list = "<b><blockquote>❌ No Banned User List Found !</blockquote></b>"
 
     if banuser_ids:
         banuser_list = ""
@@ -341,18 +341,18 @@ async def get_banuser_list(client:Client, message: Message):
                 banuser_list += f"<b><blockquote>NAME: <a href = {user_link}>{first_name}</a>\n(ID: <code>{id}</code>)</blockquote></b>\n\n"
 
             except:
-                banuser_list += f"<b><blockquote>ɪᴅ: <code>{id}</code>\n<i>ᴜɴᴀʙʟᴇ ᴛᴏ ʟᴏᴀᴅ ᴏᴛʜᴇʀ ᴅᴇᴛᴀɪʟs..</i></blockquote></b>\n\n"
+                banuser_list += f"<b><blockquote>id: <code>{id}</code>\n<i>unable to load other details..</i></blockquote></b>\n\n"
 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
     await message.reply_chat_action(ChatAction.CANCEL)
-    await pro.edit(f"<b>🚫 𝗕𝗔𝗡𝗡𝗘𝗗 𝗨𝗦𝗘𝗥 𝗟𝗜𝗦𝗧 :</b>\n\n{banuser_list}", reply_markup=reply_markup, disable_web_page_preview = True)
+    await pro.edit(f"<b>🚫 BANNED USER LIST :</b>\n\n{banuser_list}", reply_markup=reply_markup, disable_web_page_preview = True)
 
 
-#=====================================================================================##
-#.........Extra Functions.......#
-#=====================================================================================##
 
-# Auto Delete Setting Commands
+
+
+
+
 @Bot.on_message(filters.command('auto_del') & filters.private & ~banUser)
 async def autoDelete_settings(client, message):
     await message.reply_chat_action(ChatAction.TYPING)
@@ -361,26 +361,26 @@ async def autoDelete_settings(client, message):
             timer = convert_time(await db.get_del_timer())
             if await db.get_auto_delete():
                 autodel_mode = on_txt
-                mode = 'Dɪsᴀʙʟᴇ Mᴏᴅᴇ ❌'
+                mode = 'Disable Mode ❌'
             else:
                 autodel_mode = off_txt
-                mode = 'Eɴᴀʙʟᴇ Mᴏᴅᴇ ✅'
+                mode = 'Enable Mode ✅'
 
             await message.reply_photo(
                 photo = autodel_cmd_pic,
                 caption = AUTODEL_CMD_TXT.format(autodel_mode=autodel_mode, timer=timer),
                 reply_markup = InlineKeyboardMarkup([
-                    [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton('◈ Sᴇᴛ Tɪᴍᴇʀ ⏱', callback_data='set_timer')],
-                    [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
-                ])#,
-                #message_effect_id = 5107584321108051014 #👍
+                    [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton('◈ Set Timer ⏱', callback_data='set_timer')],
+                    [InlineKeyboardButton('🔄 Refresh', callback_data='autodel_cmd'), InlineKeyboardButton('Close ✖️', callback_data='close')]
+                ])
+                
             )
     except Exception as e:
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
-            await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @rohit_1888</i></b>", reply_markup=reply_markup)
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
+            await message.reply(f"<b>! Error Occured..\n<blockquote>Reason:</b> {e}</blockquote><b><i>Contanct developer: @rohit_1888</i></b>", reply_markup=reply_markup)
 
 
-#Files related settings command
+
 @Bot.on_message(filters.command('files') & filters.private & ~banUser)
 async def files_commands(client: Client, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
@@ -398,10 +398,13 @@ async def files_commands(client: Client, message: Message):
             channel_button = on_txt
             cbd = '✅'
         buttons_data = await db.get_channel_button_links()
-        name = buttons_data[0]['name'] if len(buttons_data) > 0 else "Not Set"
-        link = buttons_data[0]['link'] if len(buttons_data) > 0 else "Not Set"
-        name2 = buttons_data[1]['name'] if len(buttons_data) > 1 else "Not Set"
-        link2 = buttons_data[1]['link'] if len(buttons_data) > 1 else "Not Set"
+        buttons_text = ""
+        for i in range(5):
+            if i < len(buttons_data):
+                btn = buttons_data[i]
+                buttons_text += f"◈ button {i+1} Name: {btn['name']}\n◈ button {i+1} Link: {btn['link']}\n"
+            else:
+                buttons_text += f"◈ button {i+1} Name: Not Set\n◈ button {i+1} Link: Not Set\n"
 
         await message.reply_photo(
             photo = files_cmd_pic,
@@ -409,24 +412,21 @@ async def files_commands(client: Client, message: Message):
                 protect_content = protect_content,
                 hide_caption = hide_caption,
                 channel_button = channel_button,
-                name = name,
-                link = link,
-                name2 = name2,
-                link2 = link2
+                buttons_text = buttons_text.strip()
             ),
             reply_markup = InlineKeyboardMarkup([
-                [InlineKeyboardButton(f'Pʀᴏᴛᴇᴄᴛ Cᴏɴᴛᴇɴᴛ: {pcd}', callback_data='pc'), InlineKeyboardButton(f'Hɪᴅᴇ Cᴀᴘᴛɪᴏɴ: {hcd}', callback_data='hc')],
-                [InlineKeyboardButton(f'Cʜᴀɴɴᴇʟ Bᴜᴛᴛᴏɴ: {cbd}', callback_data='cb'), InlineKeyboardButton(f'◈ Sᴇᴛ Bᴜᴛᴛᴏɴ ➪', callback_data='setcb')],
-                [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='files_cmd'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
-            ])#,
-            #message_effect_id = 5107584321108051014 #👍
+                [InlineKeyboardButton(f'Protect Content: {pcd}', callback_data='pc'), InlineKeyboardButton(f'Hide Caption: {hcd}', callback_data='hc')],
+                [InlineKeyboardButton(f'Channel Button: {cbd}', callback_data='cb'), InlineKeyboardButton(f'◈ Set Button ➪', callback_data='setcb')],
+                [InlineKeyboardButton('🔄 Refresh', callback_data='files_cmd'), InlineKeyboardButton('Close ✖️', callback_data='close')]
+            ])
+            
         )
     except Exception as e:
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
-        await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @rohit_1888</i></b>", reply_markup=reply_markup)
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
+        await message.reply(f"<b>! Error Occured..\n<blockquote>Reason:</b> {e}</blockquote><b><i>Contanct developer: @rohit_1888</i></b>", reply_markup=reply_markup)
 
 
-#Request force sub mode commad,,,,,,
+
 @Bot.on_message(filters.command('req_fsub') & filters.private & ~banUser)
 async def handle_reqFsub(client: Client, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
@@ -441,13 +441,13 @@ async def handle_reqFsub(client: Client, message: Message):
 
         button = [
             [InlineKeyboardButton(f"{on} ON", "chng_req"), InlineKeyboardButton(f"{off} OFF", "chng_req")],
-            [InlineKeyboardButton("⚙️ Mᴏʀᴇ Sᴇᴛᴛɪɴɢs ⚙️", "more_settings")]
+            [InlineKeyboardButton("⚙️ More Settings ⚙️", "more_settings")]
         ]
-        await message.reply(text=RFSUB_CMD_TXT.format(req_mode=texting), reply_markup=InlineKeyboardMarkup(button))#, #message_effect_id=5046509860389126442)
+        await message.reply(text=RFSUB_CMD_TXT.format(req_mode=texting), reply_markup=InlineKeyboardMarkup(button))
 
     except Exception as e:
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
-        await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @rohit_1888</i></b>", reply_markup=reply_markup)
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data = "close")]])
+        await message.reply(f"<b>! Error Occured..\n<blockquote>Reason:</b> {e}</blockquote><b><i>Contanct developer: @rohit_1888</i></b>", reply_markup=reply_markup)
 
 
 @Bot.on_message(filters.command('token') & filters.private & is_admin)
@@ -455,26 +455,26 @@ async def set_shortener(client, message):
     await message.reply_chat_action(ChatAction.TYPING)
 
     try:
-        # Fetch shortener URL and API key from the database
+        
         shortener_url = await db.get_shortener_url()
         shortener_api = await db.get_shortener_api()
 
         if shortener_url and shortener_api:
-            # If both URL and API key are available, the shortener is considered "Enabled ✅"
+            
             shortener_status = "Enabled ✅"
             mode_button = InlineKeyboardButton('Disable Shortener ❌', callback_data='disable_shortener')
         else:
-            # If either URL or API key is missing, the shortener is "Disabled ❌"
+            
             shortener_status = "Disabled ❌"
             mode_button = InlineKeyboardButton('Enable Shortener ✅', callback_data='set_shortener_details')
 
-        # Send the settings message with the toggle button and other options
+        
         await message.reply_photo(
             photo=START_PIC,
             caption=(
-                f"🔗 𝗦𝗵𝗼𝗿𝘁𝗲𝗻𝗲𝗿 𝗦𝗲𝘁𝘁𝗶𝗻𝗴𝘀\n\n"
-                f"Sʜᴏʀᴛᴇɴᴇʀ Sᴛᴀᴛᴜs: {shortener_status}\n\n"
-                f"Usᴇ ᴛʜᴇ ᴏᴘᴛɪᴏɴs ʙᴇʟᴏᴡ ᴛᴏ ᴄᴏɴғɪɢᴜʀᴇ ᴛʜᴇ sʜᴏʀᴛᴇɴᴇʀ."
+                f"🔗 Shortener Settings\n\n"
+                f"Shortener Status: {shortener_status}\n\n"
+                f"Use the options below to configure the shortener."
             ),
             reply_markup=InlineKeyboardMarkup([
                 [mode_button],
@@ -491,7 +491,7 @@ async def set_shortener(client, message):
             ])
         )
     except Exception as e:
-        # Log the error for debugging purposes
+        
         logging.error(f"Error in set_shortener command: {e}")
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Close ✖️", callback_data="close")]])
         await message.reply(

@@ -15,20 +15,20 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 
 
 logging.basicConfig(
-    level=logging.INFO,  # Set the logging level (e.g., DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    level=logging.INFO,  
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
 async def fileSettings(getfunc, setfunc=None, delfunc=False):
     btn_mode, txt_mode, pic_mode = '❌', off_txt, off_pic
-    del_btn_mode = 'Eɴᴀʙʟᴇ Mᴏᴅᴇ ✅'
+    del_btn_mode = 'Enable Mode ✅'
     try:
         if not setfunc:
             if await getfunc():
                 txt_mode = on_txt
                 btn_mode = '✅'
-                del_btn_mode = 'Dɪsᴀʙʟᴇ Mᴏᴅᴇ ❌'
+                del_btn_mode = 'Disable Mode ❌'
 
             return txt_mode, (del_btn_mode if delfunc else btn_mode)
 
@@ -39,7 +39,7 @@ async def fileSettings(getfunc, setfunc=None, delfunc=False):
                 await setfunc(True)
                 pic_mode, txt_mode = on_pic, on_txt
                 btn_mode = '✅'
-                del_btn_mode = 'Dɪsᴀʙʟᴇ Mᴏᴅᴇ ❌'
+                del_btn_mode = 'Disable Mode ❌'
 
             return pic_mode, txt_mode, (del_btn_mode if delfunc else btn_mode)
 
@@ -47,21 +47,21 @@ async def fileSettings(getfunc, setfunc=None, delfunc=False):
         print(
             f"Error occured at [fileSettings(getfunc, setfunc=None, delfunc=False)] : {e}")
 
-# Provide or Make Button by takiing required modes and data
+
 
 
 def buttonStatus(pc_data: str, hc_data: str, cb_data: str, is_owner: bool = False) -> list:
     button = [
         [
             InlineKeyboardButton(
-                f'Pʀᴏᴛᴇᴄᴛ Cᴏɴᴛᴇɴᴛ: {pc_data}', callback_data='pc'),
+                f'Protect Content: {pc_data}', callback_data='pc'),
             InlineKeyboardButton(
-                f'Hɪᴅᴇ Cᴀᴘᴛɪᴏɴ: {hc_data}', callback_data='hc')
+                f'Hide Caption: {hc_data}', callback_data='hc')
         ],
         [
             InlineKeyboardButton(
-                f'Cʜᴀɴɴᴇʟ Bᴜᴛᴛᴏɴ: {cb_data}', callback_data='cb'),
-            InlineKeyboardButton(f'◈ Sᴇᴛ Bᴜᴛᴛᴏɴs ➪', callback_data='setcb')
+                f'Channel Button: {cb_data}', callback_data='cb'),
+            InlineKeyboardButton(f'◈ Set Buttons ➪', callback_data='setcb')
         ],
         [
             InlineKeyboardButton('📝 Set Caption', callback_data='set_custom_caption'),
@@ -71,18 +71,18 @@ def buttonStatus(pc_data: str, hc_data: str, cb_data: str, is_owner: bool = Fals
         button.append([InlineKeyboardButton('👥 Admins', callback_data='admins_menu')])
     return button
 
-# Verify user, if he/she is admin or owner before processing the query...
+
 
 
 async def authoUser(query, id, owner_only=False):
     if not owner_only:
         if not any([id == OWNER_ID, await db.admin_exist(id)]):
-            await query.answer("❌ Yᴏᴜ ᴀʀᴇ ɴᴏᴛ Aᴅᴍɪɴ !", show_alert=True)
+            await query.answer("❌ You are not Admin !", show_alert=True)
             return False
         return True
     else:
         if id != OWNER_ID:
-            await query.answer("❌ Yᴏᴜ ᴀʀᴇ ɴᴏᴛ Oᴡɴᴇʀ !", show_alert=True)
+            await query.answer("❌ You are not Owner !", show_alert=True)
             return False
         return True
 
@@ -98,33 +98,33 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             pass
 
     elif data.startswith("get_again_"):
-        # Handle get again callback
+        
         try:
             action = data.replace("get_again_", "")
             user_id = query.from_user.id
             
-            # Extract user_id from action (format: get_photo_123 or get_video_123 or get_batch_123)
-            # Split and get the last part as user_id
+            
+            
             parts = action.split("_")
             if len(parts) >= 3:
-                # Last part is always the user_id
+                
                 action_user_id = int(parts[-1])
                 
                 if action_user_id != user_id:
                     await query.answer("❌ Unauthorized access!", show_alert=True)
                     return
                 
-                # Extract action type (photo, video, or batch)
-                action_type = parts[1]  # 'photo', 'video', or 'batch'
+                
+                action_type = parts[1]  
                 
                 await query.answer("🔄 Getting " + action_type + "...")
                 
-                # Use the query.message directly - it has all necessary attributes
-                # We just need to ensure from_user is set correctly
+                
+                
                 msg = query.message
                 msg.from_user = query.from_user
                 
-                # Call the appropriate function
+                
                 from plugins.start import get_photo, get_video, get_batch
                 try:
                     if action_type == "photo":
@@ -137,7 +137,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         await query.answer("❌ Invalid action type!", show_alert=True)
                         return
                 finally:
-                    # Delete the notification message after calling the function
+                    
                     try:
                         await query.message.delete()
                     except:
@@ -161,52 +161,181 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 f"○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram asyncio {__version__}</a>"
             ),
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton(
-                    'Cʟᴏsᴇ ✖️', callback_data='close')]
+                [InlineKeyboardButton('⬅️ Back', callback_data='start'), InlineKeyboardButton(
+                    'Close ✖️', callback_data='close')]
             ]),
         )
 
     elif data == "buy_prem":
-        # Delete the current message and send a new one with the photo
+        
+        buttons = [
+            [InlineKeyboardButton(f"1 Month ({PRICE2})", callback_data="pay_30")],
+            [InlineKeyboardButton(f"3 Months ({PRICE3})", callback_data="pay_90")],
+            [InlineKeyboardButton(f"6 Months ({PRICE4})", callback_data="pay_180")],
+            [InlineKeyboardButton(f"1 Year ({PRICE5})", callback_data="pay_365")],
+            [InlineKeyboardButton("🔒 Close", callback_data="close")]
+        ]
+        
+        await query.message.edit_text(
+            text=(
+                f"👋 <b>{query.from_user.username}</b>\n\n"
+                f"🎖️ <b>Available Plans:</b>\n\n"
+                f"● {PRICE2} - 1 Month Prime Membership\n"
+                f"● {PRICE3} - 3 Months Prime Membership\n"
+                f"● {PRICE4} - 6 Months Prime Membership\n"
+                f"● {PRICE5} - 1 Year Prime Membership\n\n"
+                f"<b>Please select a plan below to view payment details:</b>"
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+    elif data.startswith("pay_"):
+        days = int(data.split("_")[1])
+        
+        
+        price = "Unknown"
+        if days == 30: price = PRICE2
+        elif days == 90: price = PRICE3
+        elif days == 180: price = PRICE4
+        elif days == 365: price = PRICE5
+
         await query.message.delete()
         await client.send_photo(
             chat_id=query.message.chat.id,
             photo=QR_PIC,
             caption=(
-                f"👋 {query.from_user.username}\n\n"
-                f"🎖️ Available Plans :\n\n"
-                f"● {PRICE1}  For 0 Days Prime Membership\n\n"
-                f"● {PRICE2}  For 1 Month Prime Membership\n\n"
-                f"● {PRICE3}  For 3 Months Prime Membership\n\n"
-                f"● {PRICE4}  For 6 Months Prime Membership\n\n"
-                f"● {PRICE5}  For 1 Year Prime Membership\n\n\n"
-                f"💵 ASK UPI ID TO ADMIN AND PAY THERE -  <code>{UPI_ID}</code>\n\n\n"
-                f"♻️ After Payment You Will Get Instant Membership \n\n\n"
-                f"‼️ Must Send Screenshot after payment & If anyone want custom time membrship then ask admin"
+                f"<b>You selected the {days} Days Premium Plan ({price})</b>\n\n"
+                f"💵 <b>UPI ID:</b> <code>{UPI_ID}</code>\n\n"
+                f"<b>Instructions:</b>\n"
+                f"1. Pay the exact amount ({price}) to the UPI ID or QR Code above.\n"
+                f"2. After payment is successful, click the <b>Payment Done ✅</b> button below.\n"
+                f"3. You will be asked to submit a screenshot of your transaction.\n\n"
+                f"<i>Your subscription will be activated automatically once an admin approves it.</i>"
             ),
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [
-                        InlineKeyboardButton(
-                            "ADMIN 24/7", url=(SCREENSHOT_URL)
-                        )
-                    ],
+                    [InlineKeyboardButton("Payment Done ✅", callback_data=f"paid_{days}")],
+                    [InlineKeyboardButton("⬅️ Back to Plans", callback_data="buy_prem")],
                     [InlineKeyboardButton("🔒 Close", callback_data="close")],
                 ]
             )
         )
 
+    elif data.startswith("paid_"):
+        days = int(data.split("_")[1])
+        user_id = query.from_user.id
+        
+        
+        prompt_msg = await client.ask(
+            chat_id=user_id,
+            text=(
+                f"📸 <b>Please send a clear screenshot of your payment.</b>\n\n"
+                f"<i>Make sure the Transaction ID / UTR is visible. Send the image now (you have 2 minutes).</i>\n\n"
+                f"Type /cancel to abort."
+            ),
+            timeout=120
+        )
+        
+        if prompt_msg.text and prompt_msg.text.lower() == '/cancel':
+            return await prompt_msg.reply("❌ Payment verification cancelled.")
+            
+        if not prompt_msg.photo:
+            return await prompt_msg.reply("❌ You did not send a valid photo. Payment verification cancelled. Please try again.")
+
+        
+        await prompt_msg.reply(
+            "⏳ <b>Thank you! Your payment screenshot has been sent to the admins.</b>\n\n"
+            "<i>Please wait. Your subscription will be activated once they verify the payment.</i>"
+        )
+        
+        
+        admin_markup = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("Approve ✅", callback_data=f"approve_pay_{user_id}_{days}"),
+                InlineKeyboardButton("Decline ❌", callback_data=f"decline_pay_{user_id}")
+            ]
+        ])
+        
+        await client.send_photo(
+            chat_id=OWNER_ID,
+            photo=prompt_msg.photo.file_id,
+            caption=(
+                f"💰 <b>New Payment Verification Request</b>\n\n"
+                f"👤 <b>User:</b> {query.from_user.mention} (<code>{user_id}</code>)\n"
+                f"📅 <b>Plan Requested:</b> {days} Days\n\n"
+                f"<i>Please review the screenshot and approve or decline the payment.</i>"
+            ),
+            reply_markup=admin_markup
+        )
+
+    elif data.startswith("approve_pay_"):
+        if query.from_user.id != OWNER_ID:
+            return await query.answer("❌ You are not authorized to do this.", show_alert=True)
+            
+        parts = data.split("_")
+        target_user_id = int(parts[2])
+        days = int(parts[3])
+        
+        from database.db_premium import add_premium
+        await add_premium(target_user_id, days, "d")
+        
+        
+        await query.message.edit_caption(
+            caption=(
+                f"{query.message.caption}\n\n"
+                f"✅ <b>Status:</b> Approved by {query.from_user.mention}"
+            ),
+            reply_markup=None
+        )
+        
+        
+        try:
+            await client.send_message(
+                chat_id=target_user_id,
+                text=f"🎉 <b>Congratulations!</b>\n\nYour payment has been verified. You have received {days} days of Premium Membership!"
+            )
+        except:
+            pass
+
+    elif data.startswith("decline_pay_"):
+        if query.from_user.id != OWNER_ID:
+            return await query.answer("❌ You are not authorized to do this.", show_alert=True)
+            
+        target_user_id = int(data.split("_")[2])
+        
+        
+        await query.message.edit_caption(
+            caption=(
+                f"{query.message.caption}\n\n"
+                f"❌ <b>Status:</b> Declined by {query.from_user.mention}"
+            ),
+            reply_markup=None
+        )
+        
+        
+        try:
+            await client.send_message(
+                chat_id=target_user_id,
+                text=(
+                    f"❌ <b>Payment Verification Failed</b>\n\n"
+                    f"We couldn't verify your payment. Please make sure you send a proper screenshot with the payment ID / UTR clearly visible.\n\n"
+                    f"Thank you!"
+                )
+            )
+        except:
+            pass
+
     elif data == "setting":
-        await query.edit_message_media(InputMediaPhoto(random.choice(PICS), "<b>Pʟᴇᴀsᴇ wᴀɪᴛ !\n\n<i>🔄 Rᴇᴛʀɪᴇᴠɪɴɢ ᴀʟʟ Sᴇᴛᴛɪɴɢs...</i></b>"))
+        await query.edit_message_media(InputMediaPhoto(random.choice(PICS), "<b>Please wait !\n\n<i>🔄 Retrieving all Settings...</i></b>"))
         try:
             total_fsub = len(await db.get_all_channels())
             total_admin = len(await db.get_all_admins())
             total_ban = len(await db.get_ban_users())
-            autodel_mode = 'Eɴᴀʙʟᴇᴅ' if await db.get_auto_delete() else 'Dɪsᴀʙʟᴇᴅ'
-            protect_content = 'Eɴᴀʙʟᴇᴅ' if await db.get_protect_content() else 'Dɪsᴀʙʟᴇᴅ'
-            hide_caption = 'Eɴᴀʙʟᴇᴅ' if await db.get_hide_caption() else 'Dɪsᴀʙʟᴇᴅ'
-            chnl_butn = 'Eɴᴀʙʟᴇᴅ' if await db.get_channel_button() else 'Dɪsᴀʙʟᴇᴅ'
-            reqfsub = 'Eɴᴀʙʟᴇᴅ' if await db.get_request_forcesub() else 'Dɪsᴀʙʟᴇᴅ'
+            autodel_mode = 'Enabled' if await db.get_auto_delete() else 'Disabled'
+            protect_content = 'Enabled' if await db.get_protect_content() else 'Disabled'
+            hide_caption = 'Enabled' if await db.get_hide_caption() else 'Disabled'
+            chnl_butn = 'Enabled' if await db.get_channel_button() else 'Disabled'
+            reqfsub = 'Enabled' if await db.get_request_forcesub() else 'Disabled'
 
             await query.edit_message_media(
                 InputMediaPhoto(random.choice(PICS),
@@ -222,8 +351,8 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 )
                 ),
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton(
-                        'Cʟᴏsᴇ ✖️', callback_data='close')]
+                    [InlineKeyboardButton('⬅️ Back', callback_data='start'), InlineKeyboardButton(
+                        'Close ✖️', callback_data='close')]
                 ]),
             )
         except Exception as e:
@@ -241,14 +370,14 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             )
             ),
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('🤖 Aʙᴏᴜᴛ ᴍᴇ', callback_data='about'), InlineKeyboardButton(
-                    'Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]
+                [InlineKeyboardButton('🤖 About me', callback_data='about'), InlineKeyboardButton(
+                    'Settings ⚙️', callback_data='setting')]
             ]),
         )
 
     elif data == "files_cmd":
         if await authoUser(query, query.from_user.id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 protect_content, pcd = await fileSettings(db.get_protect_content)
@@ -260,9 +389,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 for i in range(5):
                     if i < len(buttons_data):
                         btn = buttons_data[i]
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: {btn['name']}\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: {btn['link']}\n"
+                        buttons_text += f"◈ button {i+1} Name: {btn['name']}\n◈ button {i+1} Link: {btn['link']}\n"
                     else:
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: Not Set\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: Not Set\n"
+                        buttons_text += f"◈ button {i+1} Name: Not Set\n◈ button {i+1} Link: Not Set\n"
 
                 await query.edit_message_media(
                     InputMediaPhoto(files_cmd_pic,
@@ -281,7 +410,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == "pc":
         if await authoUser(query, query.from_user.id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 pic, protect_content, pcd = await fileSettings(db.get_protect_content, db.set_protect_content)
@@ -293,9 +422,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 for i in range(5):
                     if i < len(buttons_data):
                         btn = buttons_data[i]
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: {btn['name']}\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: {btn['link']}\n"
+                        buttons_text += f"◈ button {i+1} Name: {btn['name']}\n◈ button {i+1} Link: {btn['link']}\n"
                     else:
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: Not Set\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: Not Set\n"
+                        buttons_text += f"◈ button {i+1} Name: Not Set\n◈ button {i+1} Link: Not Set\n"
 
                 await query.edit_message_media(
                     InputMediaPhoto(pic,
@@ -314,7 +443,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == "hc":
         if await authoUser(query, query.from_user.id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 protect_content, pcd = await fileSettings(db.get_protect_content)
@@ -326,9 +455,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 for i in range(5):
                     if i < len(buttons_data):
                         btn = buttons_data[i]
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: {btn['name']}\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: {btn['link']}\n"
+                        buttons_text += f"◈ button {i+1} Name: {btn['name']}\n◈ button {i+1} Link: {btn['link']}\n"
                     else:
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: Not Set\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: Not Set\n"
+                        buttons_text += f"◈ button {i+1} Name: Not Set\n◈ button {i+1} Link: Not Set\n"
 
                 await query.edit_message_media(
                     InputMediaPhoto(pic,
@@ -347,7 +476,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == "cb":
         if await authoUser(query, query.from_user.id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 protect_content, pcd = await fileSettings(db.get_protect_content)
@@ -359,9 +488,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 for i in range(5):
                     if i < len(buttons_data):
                         btn = buttons_data[i]
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: {btn['name']}\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: {btn['link']}\n"
+                        buttons_text += f"◈ button {i+1} Name: {btn['name']}\n◈ button {i+1} Link: {btn['link']}\n"
                     else:
-                        buttons_text += f"◈ ʙᴜᴛᴛᴏɴ {i+1} Nᴀᴍᴇ: Not Set\n◈ ʙᴜᴛᴛᴏɴ {i+1} Lɪɴᴋ: Not Set\n"
+                        buttons_text += f"◈ button {i+1} Name: Not Set\n◈ button {i+1} Link: Not Set\n"
 
                 await query.edit_message_media(
                     InputMediaPhoto(pic,
@@ -381,22 +510,22 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     elif data == "setcb":
         id = query.from_user.id
         if await authoUser(query, id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 buttons_data = await db.get_channel_button_links()
                 
-                # Create preview with existing buttons
+                
                 button_preview = []
                 for btn in buttons_data:
                     button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
                 
                 example_text = (
-                    '<b>Tᴏ sᴇᴛ ᴛʜᴇ ʙᴜᴛᴛᴏɴ(s), Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ᴀʀɢᴜᴍᴇɴᴛs ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ. Yᴏᴜ ᴄᴀɴ sᴇᴛ ᴜᴘ ᴛᴏ 5 ʙᴜᴛᴛᴏɴs.\n\n'
-                    '<b>Sᴇᴘᴀʀᴀᴛᴇ ʙᴜᴛᴛᴏɴs ᴡɪᴛʜ | ᴏʀ ɴᴇᴡʟɪɴᴇs.</b>\n'
+                    '<b>To set the button(s), Please send valid arguments within 1 minute. You can set up to 5 buttons.\n\n'
+                    '<b>Separate buttons with | or newlines.</b>\n'
                     '<blockquote><code>Join Channel - https://t.me/btth480p | Support - https://t.me/support</code></blockquote>\n\n'
-                    '<i>Sᴇɴᴅ /clear_buttons ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴀʟʟ ʙᴜᴛᴛᴏɴs.</i>\n\n'
-                    '<i>Bᴇʟᴏᴡ ɪs ᴄᴜʀʀᴇɴᴛ ʙᴜᴛᴛᴏɴ(s) Pʀᴇᴠɪᴇᴡ ⬇️</i></b>'
+                    '<i>Send /clear_buttons to remove all buttons.</i>\n\n'
+                    '<i>Below is current button(s) Preview ⬇️</i></b>'
                 )
                 
                 set_msg = await client.ask(
@@ -411,7 +540,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     await db.set_channel_button_links([])
                     return await set_msg.reply("<b>All buttons have been cleared.</b>")
 
-                # Parse up to 5 buttons
+                
                 raw_text = set_msg.text.replace('\n', ' | ')
 
                 parts = raw_text.split('|')
@@ -426,9 +555,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         new_buttons.append({'name': name.strip(), 'link': link.strip()})
                         
                 if not new_buttons:
-                    markup = [[InlineKeyboardButton(f'◈ Sᴇᴛ Cʜᴀɴɴᴇʟ Bᴜᴛᴛᴏɴ ➪', callback_data='setcb')]]
+                    markup = [[InlineKeyboardButton(f'◈ Set Channel Button ➪', callback_data='setcb')]]
                     return await set_msg.reply(
-                        "<b>Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ᴀʀɢᴜᴍᴇɴᴛs. Fᴏʀᴍᴀᴛ: Nᴀᴍᴇ - Lɪɴᴋ</b>", 
+                        "<b>Please send valid arguments. Format: Name - Link</b>", 
                         reply_markup=InlineKeyboardMarkup(markup)
                     )
                 
@@ -440,14 +569,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     button_preview.append([InlineKeyboardButton(text=btn['name'], url=btn['link'])])
                 
                 await set_msg.reply(
-                    "<b><i>Aᴅᴅᴇᴅ Sᴜᴄcᴇssғᴜʟʟʏ ✅</i>\n<blockquote>Sᴇᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴs ᴀs Pʀᴇᴠɪᴇᴡ ⬇️</blockquote></b>", 
+                    "<b><i>Added Successfully ✅</i>\n<blockquote>See below buttons as Preview ⬇️</blockquote></b>", 
                     reply_markup=InlineKeyboardMarkup(button_preview)
                 )
                 await db.set_channel_button_links(new_buttons)
+                await db.set_channel_button(True)
                 return
             except Exception as e:
                 try:
-                    await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
+                    await client.send_message(id, text=f"<b>! Error Occured..\n<blockquote><i>Reason: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
                 except BaseException:
                     pass
 
@@ -455,42 +585,42 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     elif data == 'set_custom_caption':
         id = query.from_user.id
         if await authoUser(query, id):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
             try:
                 caption = await db.get_custom_caption()
                 msg = await client.ask(
                     chat_id=id,
-                    text=f"<b>Sᴇɴᴅ Cᴜsᴛᴏᴍ Cᴀᴘᴛɪᴏɴ ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ. Yᴏᴜ ᴄᴀɴ ᴜsᴇ HTML ᴛᴀɢs.\nSᴇɴᴅ <code>/clear_caption</code> ᴛᴏ ʀᴇᴍᴏᴠᴇ ɪᴛ.\n\n<blockquote>Cᴜʀʀᴇɴᴛ Cᴀᴘᴛɪᴏɴ:</blockquote></b> {caption}",
+                    text=f"<b>Send Custom Caption within 1 minute. You can use HTML tags.\nSend <code>/clear_caption</code> to remove it.\n\n<blockquote>Current Caption:</blockquote></b> {caption}",
                     timeout=60
                 )
                 if msg.text.strip() == '/clear_caption':
                     await db.set_custom_caption("")
-                    await msg.reply("<b>Cᴀᴘᴛɪᴏɴ ᴄʟᴇᴀʀᴇᴅ.</b>")
+                    await msg.reply("<b>Caption cleared.</b>")
                 else:
                     await db.set_custom_caption(msg.text.strip())
-                    await msg.reply("<b>Cᴜsᴛᴏᴍ Cᴀᴘᴛɪᴏɴ Sᴇᴛ Sᴜᴄᴄᴇssғᴜʟʟʏ ✅</b>")
+                    await msg.reply("<b>Custom Caption Set Successfully ✅</b>")
             except Exception as e:
                 try:
-                    await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
+                    await client.send_message(id, text=f"<b>! Error Occured..\n<blockquote><i>Reason: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
                 except BaseException:
                     pass
 
     elif data == 'admins_menu':
         id = query.from_user.id
         if await authoUser(query, id, owner_only=True):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
             try:
                 admins = await db.get_all_admins()
-                text = "<b>👥 Bᴏᴛ Aᴅᴍɪɴs</b>\n\n"
+                text = "<b>👥 Bot Admins</b>\n\n"
 
                 
                 if admins:
                     for idx, admin in enumerate(admins, 1):
                         text += f"<b>{idx}.</b> <code>{admin['_id']}</code>\n"
                 else:
-                    text += "<i>Nᴏ ᴀᴅᴍɪɴs ᴀᴅᴅᴇᴅ ʏᴇᴛ.</i>\n"
+                    text += "<i>No admins added yet.</i>\n"
                 
-                text += "\n<b>Tᴏ ᴀᴅᴅ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ ᴛʜᴇ ᴜsᴇʀ ID ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ.</b>\n<b>Tᴏ ʀᴇᴍᴏᴠᴇ ᴀɴ ᴀᴅᴍɪɴ, sᴇɴᴅ <code>/del_admin &lt;user_id&gt;</code>.</b>" 
+                text += "\n<b>To add an admin, send the user ID within 1 minute.</b>\n<b>To remove an admin, send <code>/del_admin &lt;user_id&gt;</code>.</b>" 
                 
                 msg = await client.ask(chat_id=id, text=text, timeout=60)
                 
@@ -499,25 +629,25 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     if len(parts) == 2 and parts[1].isdigit():
                         admin_id = int(parts[1])
                         await db.del_admin(admin_id)
-                        await msg.reply(f"<b>Aᴅᴍɪɴ <code>{admin_id}</code> ʀᴇᴍᴏᴠᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ✅</b>")
+                        await msg.reply(f"<b>Admin <code>{admin_id}</code> removed successfully ✅</b>")
                     else:
-                        await msg.reply("<b>❌ Iɴᴠᴀʟɪᴅ Fᴏʀᴍᴀᴛ. Tʀʏ: <code>/del_admin 12345678</code></b>")
+                        await msg.reply("<b>❌ Invalid Format. Try: <code>/del_admin 12345678</code></b>")
                 elif msg.text.isdigit():
                     new_admin = int(msg.text)
                     await db.add_admin(new_admin)
-                    await msg.reply(f"<b>Aᴅᴍɪɴ <code>{new_admin}</code> ᴀᴅᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ✅</b>")
+                    await msg.reply(f"<b>Admin <code>{new_admin}</code> added successfully ✅</b>")
                 else:
-                    await msg.reply("<b>❌ Iɴᴠᴀʟɪᴅ Iɴᴘᴜᴛ.</b>")
+                    await msg.reply("<b>❌ Invalid Input.</b>")
                     
             except Exception as e:
                 try:
-                    await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
+                    await client.send_message(id, text=f"<b>! Error Occured..\n<blockquote><i>Reason: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
                 except BaseException:
                     pass
 
     elif data == 'autodel_cmd':
         if await authoUser(query, query.from_user.id, owner_only=True):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 timer = convert_time(await db.get_del_timer())
@@ -532,9 +662,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                                     ),
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton(
-                            '◈ Sᴇᴛ Tɪᴍᴇʀ ⏱', callback_data='set_timer')],
-                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton(
-                            'Cʟᴏsᴇ ✖️', callback_data='close')]
+                            '◈ Set Timer ⏱', callback_data='set_timer')],
+                        [InlineKeyboardButton('🔄 Refresh', callback_data='autodel_cmd'), InlineKeyboardButton(
+                            'Close ✖️', callback_data='close')]
                     ])
                 )
             except Exception as e:
@@ -543,7 +673,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == 'chng_autodel':
         if await authoUser(query, query.from_user.id, owner_only=True):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 timer = convert_time(await db.get_del_timer())
@@ -558,9 +688,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                                     ),
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton(
-                            '◈ Sᴇᴛ Tɪᴍᴇʀ ⏱', callback_data='set_timer')],
-                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton(
-                            'Cʟᴏsᴇ ✖️', callback_data='close')]
+                            '◈ Set Timer ⏱', callback_data='set_timer')],
+                        [InlineKeyboardButton('🔄 Refresh', callback_data='autodel_cmd'), InlineKeyboardButton(
+                            'Close ✖️', callback_data='close')]
                     ])
                 )
             except Exception as e:
@@ -573,32 +703,32 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             try:
 
                 timer = convert_time(await db.get_del_timer())
-                set_msg = await client.ask(chat_id=id, text=f'<b><blockquote>⏱ Cᴜʀʀᴇɴᴛ Tɪᴍᴇʀ: {timer}</blockquote>\n\nTᴏ ᴄʜᴀɴɢᴇ ᴛɪᴍᴇʀ, Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ ɪɴ sᴇᴄᴏɴᴅs ᴡɪᴛʜɪɴ 1 ᴍɪɴᴜᴛᴇ.\n<blockquote>Fᴏʀ ᴇxᴀᴍᴘʟᴇ: <code>300</code>, <code>600</code>, <code>900</code></b></blockquote>', timeout=60)
+                set_msg = await client.ask(chat_id=id, text=f'<b><blockquote>⏱ Current Timer: {timer}</blockquote>\n\nTo change timer, Please send valid number in seconds within 1 minute.\n<blockquote>For example: <code>300</code>, <code>600</code>, <code>900</code></b></blockquote>', timeout=60)
                 del_timer = set_msg.text.split()
 
                 if len(del_timer) == 1 and del_timer[0].isdigit():
                     DEL_TIMER = int(del_timer[0])
                     await db.set_del_timer(DEL_TIMER)
                     timer = convert_time(DEL_TIMER)
-                    await set_msg.reply(f"<b><i>Aᴅᴅᴇᴅ Sᴜᴄcᴇssғᴜʟʟʏ ✅</i>\n<blockquote>⏱ Cᴜʀʀᴇɴᴛ Tɪᴍᴇʀ: {timer}</blockquote></b>")
+                    await set_msg.reply(f"<b><i>Added Successfully ✅</i>\n<blockquote>⏱ Current Timer: {timer}</blockquote></b>")
                 else:
                     markup = [[InlineKeyboardButton(
-                        '◈ Sᴇᴛ Dᴇʟᴇᴛᴇ Tɪᴍᴇʀ ⏱', callback_data='set_timer')]]
-                    return await set_msg.reply("<b>Pʟᴇᴀsᴇ sᴇɴᴅ ᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ ɪɴ sᴇᴄᴏɴᴅs.\n<blockquote>Fᴏʀ ᴇxᴀᴍᴘʟᴇ: <code>300</code>, <code>600</code>, <code>900</code></blockquote>\n\n<i>Tʀʏ ᴀɢᴀɪɴ ʙʏ ᴄʟɪᴄᴋɪɴɢ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ..</i></b>", reply_markup=InlineKeyboardMarkup(markup))
+                        '◈ Set Delete Timer ⏱', callback_data='set_timer')]]
+                    return await set_msg.reply("<b>Please send valid number in seconds.\n<blockquote>For example: <code>300</code>, <code>600</code>, <code>900</code></blockquote>\n\n<i>Try again by clicking below button..</i></b>", reply_markup=InlineKeyboardMarkup(markup))
 
             except Exception as e:
                 try:
-                    await set_msg.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>")
+                    await set_msg.reply(f"<b>! Error Occured..\n<blockquote>Reason:</b> {e}</blockquote>")
                     print(
                         f"! Error Occurred on callback data = 'set_timer' : {e}")
                 except BaseException:
-                    await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
+                    await client.send_message(id, text=f"<b>! Error Occured..\n<blockquote><i>Reason: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
                     print(
-                        f"! Error Occurred on callback data = 'set_timer' -> Rᴇᴀsᴏɴ: 1 minute Time out ..")
+                        f"! Error Occurred on callback data = 'set_timer' -> Reason: 1 minute Time out ..")
 
     elif data == 'chng_req':
         if await authoUser(query, query.from_user.id, owner_only=True):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             try:
                 on = off = ""
@@ -615,9 +745,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     [InlineKeyboardButton(f"{on} ON", "chng_req"), InlineKeyboardButton(
                         f"{off} OFF", "chng_req")],
                     [InlineKeyboardButton(
-                        "⚙️ Mᴏʀᴇ Sᴇᴛᴛɪɴɢs ⚙️", "more_settings")]
+                        "⚙️ More Settings ⚙️", "more_settings")]
                 ]
-                # 🎉)
+                
                 await query.message.edit_text(text=RFSUB_CMD_TXT.format(req_mode=texting), reply_markup=InlineKeyboardMarkup(button))
 
             except Exception as e:
@@ -625,15 +755,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == 'more_settings':
         if await authoUser(query, query.from_user.id, owner_only=True):
-            # await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            
             try:
-                await query.message.edit_text("<b>Pʟᴇᴀsᴇ wᴀɪᴛ !\n\n<i>🔄 Rᴇᴛʀɪᴇᴠɪɴɢ ᴀʟʟ Sᴇᴛᴛɪɴɢs...</i></b>")
-                LISTS = "Eᴍᴘᴛʏ Rᴇǫᴜᴇsᴛ FᴏʀᴄᴇSᴜʙ Cʜᴀɴɴᴇʟ Lɪsᴛ !?"
+                await query.message.edit_text("<b>Please wait !\n\n<i>🔄 Retrieving all Settings...</i></b>")
+                LISTS = "Empty Request ForceSub Channel List !?"
 
                 REQFSUB_CHNLS = await db.get_reqChannel()
                 if REQFSUB_CHNLS:
                     LISTS = ""
-                    channel_name = "<i>Uɴᴀʙʟᴇ Lᴏᴀᴅ Nᴀᴍᴇ..</i>"
+                    channel_name = "<i>Unable Load Name..</i>"
                     for CHNL in REQFSUB_CHNLS:
                         await query.message.reply_chat_action(ChatAction.TYPING)
                         try:
@@ -652,12 +782,12 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         LISTS += f"NAME: {channel_name}\n(ID: <code>{CHNL}</code>)\nUSERS: {channel_users}\n\n"
 
                 buttons = [
-                    [InlineKeyboardButton("ᴄʟᴇᴀʀ ᴜsᴇʀs", "clear_users"), InlineKeyboardButton(
-                        "cʟᴇᴀʀ cʜᴀɴɴᴇʟs", "clear_chnls")],
+                    [InlineKeyboardButton("clear users", "clear_users"), InlineKeyboardButton(
+                        "clear channels", "clear_chnls")],
                     [InlineKeyboardButton(
-                        "♻️  Rᴇғʀᴇsʜ Sᴛᴀᴛᴜs  ♻️", "more_settings")],
-                    [InlineKeyboardButton("⬅️ Bᴀᴄᴋ", "req_fsub"), InlineKeyboardButton(
-                        "Cʟᴏsᴇ ✖️", "close")]
+                        "♻️  Refresh Status  ♻️", "more_settings")],
+                    [InlineKeyboardButton("⬅️ Back", "req_fsub"), InlineKeyboardButton(
+                        "Close ✖️", "close")]
                 ]
                 await query.message.reply_chat_action(ChatAction.CANCEL)
                 await query.message.edit_text(text=RFSUB_MS_TXT.format(reqfsub_list=LISTS.strip()), reply_markup=InlineKeyboardMarkup(buttons))
@@ -667,14 +797,14 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     f"! Error Occurred on callback data = 'more_settings' : {e}")
 
     elif data == 'clear_users':
-        # if await authoUser(query, query.from_user.id, owner_only=True) :
-        # await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+        
+        
         try:
             REQFSUB_CHNLS = await db.get_reqChannel()
             if not REQFSUB_CHNLS:
-                return await query.answer("Eᴍᴘᴛʏ Rᴇǫᴜᴇsᴛ FᴏʀᴄᴇSᴜʙ Cʜᴀɴɴᴇʟ !?", show_alert=True)
+                return await query.answer("Empty Request ForceSub Channel !?", show_alert=True)
 
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             REQFSUB_CHNLS = list(map(str, REQFSUB_CHNLS))
             buttons = [REQFSUB_CHNLS[i:i + 2]
@@ -685,22 +815,22 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             user_reply = await client.ask(query.from_user.id, text=CLEAR_USERS_TXT, reply_markup=ReplyKeyboardMarkup(buttons, one_time_keyboard=True, resize_keyboard=True))
 
             if user_reply.text == 'CANCEL':
-                return await user_reply.reply("<b><i>🆑 Cᴀɴᴄᴇʟʟᴇᴅ...</i></b>", reply_markup=ReplyKeyboardRemove())
+                return await user_reply.reply("<b><i>🆑 Cancelled...</i></b>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text in REQFSUB_CHNLS:
                 try:
                     await db.clear_reqSent_user(int(user_reply.text))
-                    return await user_reply.reply(f"<b><blockquote>✅ Usᴇʀ Dᴀᴛᴀ Sᴜᴄᴄᴇssғᴜʟʟʏ Cʟᴇᴀʀᴇᴅ ғʀᴏᴍ Cʜᴀɴɴᴇʟ ɪᴅ: <code>{user_reply.text}</code></blockquote></b>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b><blockquote>✅ User Data Successfully Cleared from Channel id: <code>{user_reply.text}</code></blockquote></b>", reply_markup=ReplyKeyboardRemove())
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text == 'DELETE ALL CHANNELS USER':
                 try:
                     for CHNL in REQFSUB_CHNLS:
                         await db.clear_reqSent_user(int(CHNL))
-                    return await user_reply.reply(f"<b><blockquote>✅ Usᴇʀ Dᴀᴛᴀ Sᴜᴄᴄᴇssғᴜʟʟʏ Cʟᴇᴀʀᴇᴅ ғʀᴏᴍ Aʟʟ Cʜᴀɴɴᴇʟ ɪᴅs</blockquote></b>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b><blockquote>✅ User Data Successfully Cleared from All Channel ids</blockquote></b>", reply_markup=ReplyKeyboardRemove())
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             else:
                 return await user_reply.reply(f"<b><blockquote>INVALID SELECTIONS</blockquote></b>", reply_markup=ReplyKeyboardRemove())
@@ -709,14 +839,14 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             print(f"! Error Occurred on callback data = 'clear_users' : {e}")
 
     elif data == 'clear_chnls':
-        # if await authoUser(query, query.from_user.id, owner_only=True)
+        
 
         try:
             REQFSUB_CHNLS = await db.get_reqChannel()
             if not REQFSUB_CHNLS:
-                return await query.answer("Eᴍᴘᴛʏ Rᴇǫᴜᴇsᴛ FᴏʀᴄᴇSᴜʙ Cʜᴀɴɴᴇʟ !?", show_alert=True)
+                return await query.answer("Empty Request ForceSub Channel !?", show_alert=True)
 
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             REQFSUB_CHNLS = list(map(str, REQFSUB_CHNLS))
             buttons = [REQFSUB_CHNLS[i:i + 2]
@@ -727,7 +857,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             user_reply = await client.ask(query.from_user.id, text=CLEAR_CHNLS_TXT, reply_markup=ReplyKeyboardMarkup(buttons, one_time_keyboard=True, resize_keyboard=True))
 
             if user_reply.text == 'CANCEL':
-                return await user_reply.reply("<b><i>🆑 Cᴀɴᴄᴇʟʟᴇᴅ...</i></b>", reply_markup=ReplyKeyboardRemove())
+                return await user_reply.reply("<b><i>🆑 Cancelled...</i></b>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text in REQFSUB_CHNLS:
                 try:
@@ -742,9 +872,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
                     await db.del_stored_reqLink(chnl_id)
 
-                    return await user_reply.reply(f"<b><blockquote><code>{user_reply.text}</code> Cʜᴀɴɴᴇʟ ɪᴅ ᴀʟᴏɴɢ ᴡɪᴛʜ ɪᴛs ᴅᴀᴛᴀ sᴜᴄᴄᴇssғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b><blockquote><code>{user_reply.text}</code> Channel id along with its data successfully Deleted ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text == 'DELETE ALL CHANNEL IDS':
                 try:
@@ -760,10 +890,10 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
                         await db.del_stored_reqLink(chnl)
 
-                    return await user_reply.reply(f"<b><blockquote>Aʟʟ Cʜᴀɴɴᴇʟ ɪᴅs ᴀʟᴏɴɢ ᴡɪᴛʜ ɪᴛs ᴅᴀᴛᴀ sᴜᴄᴄᴇssғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b><blockquote>All Channel ids along with its data successfully Deleted ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
 
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             else:
                 return await user_reply.reply(f"<b><blockquote>INVALID SELECTIONS</blockquote></b>", reply_markup=ReplyKeyboardRemove())
@@ -772,15 +902,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             print(f"! Error Occurred on callback data = 'more_settings' : {e}")
 
     elif data == 'clear_links':
-        # if await authoUser(query, query.from_user.id, owner_only=True) :
-        # await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+        
+        
 
         try:
             REQFSUB_CHNLS = await db.get_reqLink_channels()
             if not REQFSUB_CHNLS:
-                return await query.answer("Nᴏ Sᴛᴏʀᴇᴅ Rᴇǫᴜᴇsᴛ Lɪɴᴋ Aᴠᴀɪʟᴀʙʟᴇ !?", show_alert=True)
+                return await query.answer("No Stored Request Link Available !?", show_alert=True)
 
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
 
             REQFSUB_CHNLS = list(map(str, REQFSUB_CHNLS))
             buttons = [REQFSUB_CHNLS[i:i + 2]
@@ -791,7 +921,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             user_reply = await client.ask(query.from_user.id, text=CLEAR_LINKS_TXT, reply_markup=ReplyKeyboardMarkup(buttons, one_time_keyboard=True, resize_keyboard=True))
 
             if user_reply.text == 'CANCEL':
-                return await user_reply.reply("<b><i>🆑 Cᴀɴᴄᴇʟʟᴇᴅ...</i></b>", reply_markup=ReplyKeyboardRemove())
+                return await user_reply.reply("<b><i>🆑 Cancelled...</i></b>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text in REQFSUB_CHNLS:
                 channel_id = int(user_reply.text)
@@ -799,16 +929,16 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     try:
                         await client.revoke_chat_invite_link(channel_id, await db.get_stored_reqLink(channel_id))
                     except BaseException:
-                        text = """<b>❌ Uɴᴀʙʟᴇ ᴛᴏ Rᴇᴠᴏᴋᴇ ʟɪɴᴋ !
-<blockquote expandable>ɪᴅ: <code>{}</code></b>
-<i>Eɪᴛʜᴇʀ ᴛʜᴇ ʙᴏᴛ ɪs ɴᴏᴛ ɪɴ ᴀʙᴏᴠᴇ ᴄʜᴀɴɴᴇʟ Oʀ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘʀᴏᴘᴇʀ ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs</i></blockquote>"""
+                        text = """<b>❌ Unable to Revoke link !
+<blockquote expandable>id: <code>{}</code></b>
+<i>Either the bot is not in above channel Or don't have proper admin permissions</i></blockquote>"""
                         return await user_reply.reply(text=text.format(channel_id), reply_markup=ReplyKeyboardRemove())
 
                     await db.del_stored_reqLink(channel_id)
-                    return await user_reply.reply(f"<b><blockquote><code>{channel_id}</code> Cʜᴀɴɴᴇʟs Lɪɴᴋ Sᴜᴄᴄᴇssғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b><blockquote><code>{channel_id}</code> Channels Link Successfully Deleted ✅</blockquote></b>", reply_markup=ReplyKeyboardRemove())
 
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             elif user_reply.text == 'DELETE ALL REQUEST LINKS':
                 try:
@@ -818,15 +948,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         try:
                             await client.revoke_chat_invite_link(channel_id, await db.get_stored_reqLink(channel_id))
                         except BaseException:
-                            result += f"<blockquote expandable><b><code>{channel_id}</code> Uɴᴀʙʟᴇ ᴛᴏ Rᴇᴠᴏᴋᴇ ❌</b>\n<i>Eɪᴛʜᴇʀ ᴛʜᴇ ʙᴏᴛ ɪs ɴᴏᴛ ɪɴ ᴀʙᴏᴠᴇ ᴄʜᴀɴɴᴇʟ Oʀ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘʀᴏᴘᴇʀ ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.</i></blockquote>\n"
+                            result += f"<blockquote expandable><b><code>{channel_id}</code> Unable to Revoke ❌</b>\n<i>Either the bot is not in above channel Or don't have proper admin permissions.</i></blockquote>\n"
                             continue
                         await db.del_stored_reqLink(channel_id)
-                        result += f"<blockquote><b><code>{channel_id}</code> IDs Lɪɴᴋ Dᴇʟᴇᴛᴇᴅ ✅</b></blockquote>\n"
+                        result += f"<blockquote><b><code>{channel_id}</code> IDs Link Deleted ✅</b></blockquote>\n"
 
-                    return await user_reply.reply(f"<b>⁉️ Oᴘᴇʀᴀᴛɪᴏɴ Rᴇsᴜʟᴛ:</b>\n{result.strip()}", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>⁉️ Operation Result:</b>\n{result.strip()}", reply_markup=ReplyKeyboardRemove())
 
                 except Exception as e:
-                    return await user_reply.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ...\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
+                    return await user_reply.reply(f"<b>! Error Occured...\n<blockquote>Reason:</b> {e}</blockquote>", reply_markup=ReplyKeyboardRemove())
 
             else:
                 return await user_reply.reply(f"<b><blockquote>INVALID SELECTIONS</blockquote></b>", reply_markup=ReplyKeyboardRemove())
@@ -835,8 +965,8 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             print(f"! Error Occurred on callback data = 'more_settings' : {e}")
 
     elif data == 'req_fsub':
-        # if await authoUser(query, query.from_user.id, owner_only=True) :
-        await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+        
+        await query.answer("♻️ Query Processing....")
 
         try:
             on = off = ""
@@ -850,9 +980,9 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             button = [
                 [InlineKeyboardButton(f"{on} ON", "chng_req"), InlineKeyboardButton(
                     f"{off} OFF", "chng_req")],
-                [InlineKeyboardButton("⚙️ Mᴏʀᴇ Sᴇᴛᴛɪɴɢs ⚙️", "more_settings")]
+                [InlineKeyboardButton("⚙️ More Settings ⚙️", "more_settings")]
             ]
-            # 🎉)
+            
             await query.message.edit_text(text=RFSUB_CMD_TXT.format(req_mode=texting), reply_markup=InlineKeyboardMarkup(button))
 
         except Exception as e:
@@ -862,7 +992,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             button = [
                 [InlineKeyboardButton("🤖 Force Sub Settings", callback_data="fsub_main")],
                 [InlineKeyboardButton("📝 Caption Settings", callback_data="caption_settings"), InlineKeyboardButton("🔲 Button Settings", callback_data="button_settings")],
-                [InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]
+                [InlineKeyboardButton("Close ✖️", callback_data="close")]
             ]
             await query.message.edit_text(
                 text="<b>⚙️ Main Settings Panel:</b>\n\nManage your bot's configuration from here.", 
@@ -915,7 +1045,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         if await authoUser(query, query.from_user.id):
             await db.set_custom_caption("")
             await query.answer("✅ Caption deleted successfully.", show_alert=True)
-            # Refresh caption settings
+            
             query.data = "caption_settings"
             await cb_handler(client, query)
 
@@ -992,6 +1122,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         new_buttons = new_buttons[:5]
 
                     await db.set_channel_button_links(new_buttons)
+                    await db.set_channel_button(True)
                     
                     button_preview = []
                     for btn in new_buttons:
@@ -1011,7 +1142,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         if await authoUser(query, query.from_user.id):
             await db.set_channel_button_links([])
             await query.answer("✅ Buttons deleted successfully.", show_alert=True)
-            # Refresh button settings
+            
             query.data = "button_settings"
             await cb_handler(client, query)
 
@@ -1177,19 +1308,19 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     
 
-    # Handle shortener settings
+    
     elif data == "shortener_settings":
         if await authoUser(query, query.from_user.id, owner_only=True):
             try:
                 await query.answer("💫 Fetching Shortener details...")
 
-            # Fetch shortener details
+            
                 shortener_url = await db.get_shortener_url()
                 shortener_api = await db.get_shortener_api()
                 verified_time = await db.get_verified_time()
                 tut_video = await db.get_tut_video()
 
-            # Prepare the details for display
+            
                 shortener_url_display = shortener_url or "Not set"
                 shortener_api_display = shortener_api or "Not set"
                 status = "Active" if shortener_url and shortener_api else "Inactive"
@@ -1200,23 +1331,23 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     f"[Tutorial Video]({tut_video})" if tut_video else "Not set"
                 )
 
-            # Response message
+            
                 response_text = (
-                    f"𝗦𝗵𝗼𝗿𝘁𝗲𝗻𝗲𝗿 𝗗𝗲𝘁𝗮𝗶𝗹𝘀\n\n"
-                    f"Sɪᴛᴇ: {shortener_url_display}\n"
-                    f"API Tᴏᴋᴇɴ:  {shortener_api_display}\n"
-                    f"Sᴛᴀᴛᴜs: {status}\n\n"
-                    f"Vᴇʀɪғɪᴇᴅ Tɪᴍᴇ:  {verified_time_display}\n"
-                    f"Tᴜᴛᴏʀɪᴀʟ Vɪᴅᴇᴏ: {tut_video_display}"
+                    f"Shortener Details\n\n"
+                    f"Site: {shortener_url_display}\n"
+                    f"API Token:  {shortener_api_display}\n"
+                    f"Status: {status}\n\n"
+                    f"Verified Time:  {verified_time_display}\n"
+                    f"Tutorial Video: {tut_video_display}"
                 )
 
-            # Update the message with the fetched details
+            
                 await query.message.edit_text(
                     text=response_text,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton('🔙', callback_data='set_shortener')]
                     ]),
-                    disable_web_page_preview=True  # Disable preview for tutorial video link
+                    disable_web_page_preview=True  
                 )
 
             except Exception as e:
@@ -1233,13 +1364,13 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         user_id = query.from_user.id
         shortener_details = await db.get_shortener()
 
-    # Toggle the shortener status in the database
+    
         if shortener_details:
-        # Disable shortener
+        
             await db.set_shortener("", "")
             await query.answer("Shortener Disabled ❌", show_alert=True)
         else:
-        # Enable shortener, prompt for URL and API Key
+        
             await query.answer("Shortener Enabled ✅. Please provide the Shortener URL and API Key.", show_alert=True)
             await query.message.reply("Send the Shortener URL and API Key in the format:\n`<shortener_url> <api_key>`")
 
@@ -1263,10 +1394,10 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 shortener_url = site_msg.text.strip()
 
 
-            # Confirm the shortener site URL
+            
                 await site_msg.reply(f"Shortener site URL set to: {shortener_url}\nNow please send the API key.")
 
-            # Step 3: Prompt for API key
+            
                 set_msg_api = await query.message.reply(
                     "⏳ Please provide the API key for the shortener within 1 minute.",
                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Back', callback_data='set_shortener')]])
@@ -1280,11 +1411,11 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
                 api_key = api_msg.text.strip()
 
-            # Step 4: Save the shortener details in the database
+            
                 await db.set_shortener_url(shortener_url)
                 await db.set_shortener_api(api_key)
             
-            # Confirmation message
+            
                 await api_msg.reply(
                     "✅ Shortener details have been successfully set!",
                     reply_markup=InlineKeyboardMarkup([
@@ -1298,7 +1429,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Back', callback_data='set_shortener')]])
                 )
             except Exception as e:
-                logging.error(f"Error setting shortener details: {e}")  # This now works correctly
+                logging.error(f"Error setting shortener details: {e}")  
                 await query.message.reply(
                     f"⚠️ Error occurred: {e}",
     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Back', callback_data='set_shortener')]])
@@ -1320,7 +1451,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     shortener_status = "Disabled ❌"
                     mode_button = InlineKeyboardButton('Enable Shortener ✅', callback_data='set_shortener_details')
 
-            # Edit the same message instead of sending a new one
+            
                 await message.edit_media(
                     media=InputMediaPhoto(
                         media=START_PIC,
@@ -1353,43 +1484,43 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         id = query.from_user.id
 
         if await authoUser(query, id, owner_only=True):
-            await query.answer("♻️ Qᴜᴇʀʏ Pʀᴏᴄᴇssɪɴɢ....")
+            await query.answer("♻️ Query Processing....")
         
             try:
-            # Fetch the current tutorial video URL from the database
+            
                 current_video_url = await db.get_tut_video()
 
-            # Prompt the user to input the new tutorial video URL
+            
                 set_msg = await client.ask(
                     chat_id=id,
-                    text=f'<b><blockquote>⏳ Cᴜʀʀᴇɴᴛ Tᴜᴛᴏʀɪᴀʟ Vɪᴅᴇᴏ URL: {current_video_url if current_video_url else "Not Set"}</blockquote>\n\nTᴏ ᴄʜᴀɴɢᴇ, Pʟᴇᴀsᴇ sᴇɴᴅ ᴀ ᴠᴀʟɪᴅ ᴠɪᴅᴇᴏ URL.\n<blockquote>Fᴏʀ ᴇxᴀᴍᴘʟᴇ: <code>https://youtube.com/some_video</code></b></blockquote>',
+                    text=f'<b><blockquote>⏳ Current Tutorial Video URL: {current_video_url if current_video_url else "Not Set"}</blockquote>\n\nTo change, Please send a valid video URL.\n<blockquote>For example: <code>https://youtube.com/some_video</code></b></blockquote>',
                     timeout=60
                 )
 
-            # Validate the user input for a valid URL
+            
                 video_url = set_msg.text.strip()
 
                 if video_url.startswith("http") and "://" in video_url:
-                # Save the new tutorial video URL to the database
+                
                     await db.set_tut_video(video_url)
 
-                # Confirm the update to the user
-                    await set_msg.reply(f"<b><i>Tᴜᴛᴏʀɪᴀʟ Vɪᴅᴇᴏ URL sᴇᴛ sᴜᴄᴄᴇssғᴜʟʟʏ ✅</i>\n<blockquote>📹 Cᴜʀʀᴇɴᴛ Tᴜᴛᴏʀɪᴀʟ Vɪᴅᴇᴏ URL: {video_url}</blockquote></b>")
+                
+                    await set_msg.reply(f"<b><i>Tutorial Video URL set successfully ✅</i>\n<blockquote>📹 Current Tutorial Video URL: {video_url}</blockquote></b>")
                 else:
-                # If the URL is invalid, prompt the user to try again
+                
                     markup = [[InlineKeyboardButton(
-                        '◈ Sᴇᴛ Tᴜᴛᴏʀɪᴀʟ Vɪᴅᴇᴏ URL 📹', callback_data='set_tut_video')]]
+                        '◈ Set Tutorial Video URL 📹', callback_data='set_tut_video')]]
                     return await set_msg.reply(
-                        "<b>Pʟᴇᴀsᴇ sᴇɴᴅ ᴀ ʟɪɴᴋ ᴛᴏ ᴀ ᴠᴀʟɪᴅ ᴠɪᴅᴇᴏ.\n<blockquote>Fᴏʀ ᴇxᴀᴍᴘʟᴇ: <code>https://youtube.com/some_video</code></blockquote>\n\n<i>Tʀʏ ᴀɢᴀɪɴ ʙʏ ᴄʟɪᴄᴋɪɴɢ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ..</i></b>", reply_markup=InlineKeyboardMarkup(markup))
+                        "<b>Please send a link to a valid video.\n<blockquote>For example: <code>https://youtube.com/some_video</code></blockquote>\n\n<i>Try again by clicking below button..</i></b>", reply_markup=InlineKeyboardMarkup(markup))
 
             except Exception as e:
                 try:
-                # Handle any exceptions that occur during the process
-                    await set_msg.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote>")
+                
+                    await set_msg.reply(f"<b>! Error Occured..\n<blockquote>Reason:</b> {e}</blockquote>")
                     print(f"! Error Occurred on callback data = 'set_tut_video' : {e}")
                 except BaseException:
-                # If an error occurs while sending the error message, send a timeout message
-                    await client.send_message(id, text=f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote><i>Rᴇᴀsᴏɴ: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
+                
+                    await client.send_message(id, text=f"<b>! Error Occured..\n<blockquote><i>Reason: 1 minute Time out ..</i></b></blockquote>", disable_notification=True)
                     print(f"! Error Occurred on callback data = 'set_tut_video' -> Reason: 1 minute Time out ..")
 
 
@@ -1400,11 +1531,11 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await query.answer("♻️ Processing request...")
 
             try:
-                # Fetch the current verified time from the database
+                
                 current_verify_time = await db.get_verified_time()
                 time_display = f"{current_verify_time} seconds" if current_verify_time else "Not set"
 
-                # Prompt the user to input a new verified time
+                
                 set_msg = await client.ask(
                     chat_id=id,
                     text=(
@@ -1415,22 +1546,22 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     timeout=60
                 )
 
-                # Validate the user input
+                
                 verify_time_input = set_msg.text.strip()
                 if verify_time_input.isdigit():
                     verify_time = int(verify_time_input)
 
-                    # Save the new verified time to the database
+                    
                     await db.set_verified_time(verify_time)
                     formatted_time = f"{verify_time} seconds"
                     
-                    # Confirm the update to the user
+                    
                     await set_msg.reply(
                         f"<b><i>Timer updated successfully ✅</i>\n"
                         f"<blockquote>⏱ Current Timer: {formatted_time}</blockquote></b>"
                     )
                 else:
-                    # Handle invalid input
+                    
                     markup = [[InlineKeyboardButton('◈ Set Verify Timer ⏱', callback_data='set_verify_time')]]
                     return await set_msg.reply(
                         "<b>Please send a valid number in seconds.\n"
@@ -1440,14 +1571,14 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     )
 
             except asyncio.TimeoutError:
-                # Handle timeout if user doesn't respond in time
+                
                 await client.send_message(
                     id,
                     text="<b>⚠️ Timeout occurred. You did not respond within the time limit.</b>",
                     disable_notification=True
                 )
             except Exception as e:
-                # Handle any other exceptions
+                
                 await client.send_message(
                     id,
                     text=f"<b>⚠️ Error occurred:\n<blockquote>{e}</blockquote></b>",
@@ -1461,12 +1592,12 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         await query.answer()
 
         try:
-            # Check if shortener details are already set
+            
             shortener_url = await db.get_shortener_url()
             shortener_api = await db.get_shortener_api()
 
             if shortener_url and shortener_api:
-                # Enable the shortener
+                
                 success_url = await db.set_shortener_url(shortener_url)
                 success_api = await db.set_shortener_api(shortener_api)
 
@@ -1483,7 +1614,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                         "Failed to enable the shortener. Please try again."
                     )
             else:
-                # If no shortener details are found, prompt the user to set them
+                
                 await query.edit_message_caption(
                     caption="No shortener details found. Please set the shortener details first.",
                     reply_markup=InlineKeyboardMarkup([
@@ -1500,7 +1631,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     elif data == "disable_shortener":
         await query.answer()
     
-    # Deactivate the shortener
+    
         success = await db.deactivate_shortener()
         if success:
             await query.edit_message_caption(
